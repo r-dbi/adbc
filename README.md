@@ -11,9 +11,17 @@ adbc is an DBI-compliant interface to databases supporting the experimental adbc
 
 Install from GitHub via
 
-```
+```r
 # install.packages("devtools")
 devtools::install_github("r-dbi/adbc")
+```
+
+## Example
+
+Requires duckdb from <https://github.com/krlmlr/duckdb/tree/adbc>.
+
+```r
+load_driver("Driver=~/git/R/duckdb/tools/rpkg/src/duckdb.so;Entrypoint=duckdb_adbc_driver_init")
 ```
 
 ---
