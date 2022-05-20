@@ -6,7 +6,7 @@
 \alias{adbc-package}
 \title{adbc: Boilerplate for implementing a DBI back end}
 \description{
-A dummy DBI back end that provides access to a hypothetical data source named "Kazam", intended to be used as boilerplate for implementing DBI back ends from scratch.
+A dummy DBI back end that provides access to a hypothetical data source named "adbc", intended to be used as boilerplate for implementing DBI back ends from scratch.
 }
 \details{
 TBD.

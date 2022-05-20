@@ -1,5 +1,5 @@
 DBItest::make_context(
-  Kazam(),
+  adbc(),
   list(),
   tweaks = suppressWarnings(DBItest::tweaks(
     dbitest_version = "1.7.2"

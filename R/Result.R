@@ -1,18 +1,18 @@
 #' @include Connection.R
 NULL
 
-KazamResult <- function(connection, statement) {
+adbcResult <- function(connection, statement) {
   # TODO: Initialize result
-  new("KazamResult", connection = connection, statement = statement)
+  new("adbcResult", connection = connection, statement = statement)
 }
 
 #' @rdname DBI
 #' @export
 setClass(
-  "KazamResult",
+  "adbcResult",
   contains = "DBIResult",
   slots = list(
-    connection = "KazamConnection",
+    connection = "adbcConnection",
     statement = "character"
   )
 )

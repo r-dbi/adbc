@@ -19,7 +19,7 @@ reference:
 
 - title: Package documentation
   contents:
-  - Kazam
+  - adbc
   - adbc-package
 
 development:

@@ -24,150 +24,150 @@
 \docType{class}
 \name{DBI}
 \alias{DBI}
-\alias{KazamDriver-class}
-\alias{KazamConnection-class}
-\alias{KazamResult-class}
-\alias{dbBegin_KazamConnection}
-\alias{dbBegin,KazamConnection-method}
-\alias{dbBind_KazamResult}
-\alias{dbBind,KazamResult-method}
-\alias{dbClearResult_KazamResult}
-\alias{dbClearResult,KazamResult-method}
-\alias{dbColumnInfo_KazamResult}
-\alias{dbColumnInfo,KazamResult-method}
-\alias{dbCommit_KazamConnection}
-\alias{dbCommit,KazamConnection-method}
-\alias{dbConnect_KazamDriver}
-\alias{dbConnect,KazamDriver-method}
-\alias{dbDataType_KazamConnection}
-\alias{dbDataType,KazamConnection,ANY-method}
-\alias{dbDataType_KazamDriver}
-\alias{dbDataType,KazamDriver,ANY-method}
-\alias{dbDataType_KazamDriver_list}
-\alias{dbDataType,KazamDriver,list-method}
-\alias{dbDisconnect_KazamConnection}
-\alias{dbDisconnect,KazamConnection-method}
-\alias{dbExistsTable_KazamConnection_character}
-\alias{dbExistsTable,KazamConnection,character-method}
-\alias{dbFetch_KazamResult}
-\alias{dbFetch,KazamResult-method}
-\alias{dbGetInfo_KazamConnection}
-\alias{dbGetInfo,KazamConnection-method}
-\alias{dbGetInfo_KazamDriver}
-\alias{dbGetInfo,KazamDriver-method}
-\alias{dbGetInfo_KazamResult}
-\alias{dbGetInfo,KazamResult-method}
-\alias{dbGetRowCount_KazamResult}
-\alias{dbGetRowCount,KazamResult-method}
-\alias{dbGetRowsAffected_KazamResult}
-\alias{dbGetRowsAffected,KazamResult-method}
-\alias{dbGetStatement_KazamResult}
-\alias{dbGetStatement,KazamResult-method}
-\alias{dbHasCompleted_KazamResult}
-\alias{dbHasCompleted,KazamResult-method}
-\alias{dbIsValid_KazamConnection}
-\alias{dbIsValid,KazamConnection-method}
-\alias{dbIsValid_KazamDriver}
-\alias{dbIsValid,KazamDriver-method}
-\alias{dbIsValid_KazamResult}
-\alias{dbIsValid,KazamResult-method}
-\alias{dbListFields_KazamConnection_character}
-\alias{dbListFields,KazamConnection,character-method}
-\alias{dbListTables_KazamConnection}
-\alias{dbListTables,KazamConnection-method}
-\alias{dbQuoteIdentifier_KazamConnection_character}
-\alias{dbQuoteIdentifier,KazamConnection,character-method}
-\alias{dbQuoteString_KazamConnection_character}
-\alias{dbQuoteString,KazamConnection,character-method}
-\alias{dbReadTable_KazamConnection_character}
-\alias{dbReadTable,KazamConnection,character-method}
-\alias{dbRemoveTable_KazamConnection_character}
-\alias{dbRemoveTable,KazamConnection,character-method}
-\alias{dbRollback_KazamConnection}
-\alias{dbRollback,KazamConnection-method}
-\alias{dbSendQuery_KazamConnection_character}
-\alias{dbSendQuery,KazamConnection,character-method}
-\alias{dbSendStatement_KazamConnection_character}
-\alias{dbSendStatement,KazamConnection,character-method}
-\alias{dbWriteTable_KazamConnection_character_data.frame}
-\alias{dbWriteTable,KazamConnection,character,data.frame-method}
-\alias{show_KazamConnection}
-\alias{show,KazamConnection-method}
-\alias{show_KazamDriver}
-\alias{show,KazamDriver-method}
-\alias{show_KazamResult}
-\alias{show,KazamResult-method}
+\alias{adbcDriver-class}
+\alias{adbcConnection-class}
+\alias{adbcResult-class}
+\alias{dbBegin_adbcConnection}
+\alias{dbBegin,adbcConnection-method}
+\alias{dbBind_adbcResult}
+\alias{dbBind,adbcResult-method}
+\alias{dbClearResult_adbcResult}
+\alias{dbClearResult,adbcResult-method}
+\alias{dbColumnInfo_adbcResult}
+\alias{dbColumnInfo,adbcResult-method}
+\alias{dbCommit_adbcConnection}
+\alias{dbCommit,adbcConnection-method}
+\alias{dbConnect_adbcDriver}
+\alias{dbConnect,adbcDriver-method}
+\alias{dbDataType_adbcConnection}
+\alias{dbDataType,adbcConnection,ANY-method}
+\alias{dbDataType_adbcDriver}
+\alias{dbDataType,adbcDriver,ANY-method}
+\alias{dbDataType_adbcDriver_list}
+\alias{dbDataType,adbcDriver,list-method}
+\alias{dbDisconnect_adbcConnection}
+\alias{dbDisconnect,adbcConnection-method}
+\alias{dbExistsTable_adbcConnection_character}
+\alias{dbExistsTable,adbcConnection,character-method}
+\alias{dbFetch_adbcResult}
+\alias{dbFetch,adbcResult-method}
+\alias{dbGetInfo_adbcConnection}
+\alias{dbGetInfo,adbcConnection-method}
+\alias{dbGetInfo_adbcDriver}
+\alias{dbGetInfo,adbcDriver-method}
+\alias{dbGetInfo_adbcResult}
+\alias{dbGetInfo,adbcResult-method}
+\alias{dbGetRowCount_adbcResult}
+\alias{dbGetRowCount,adbcResult-method}
+\alias{dbGetRowsAffected_adbcResult}
+\alias{dbGetRowsAffected,adbcResult-method}
+\alias{dbGetStatement_adbcResult}
+\alias{dbGetStatement,adbcResult-method}
+\alias{dbHasCompleted_adbcResult}
+\alias{dbHasCompleted,adbcResult-method}
+\alias{dbIsValid_adbcConnection}
+\alias{dbIsValid,adbcConnection-method}
+\alias{dbIsValid_adbcDriver}
+\alias{dbIsValid,adbcDriver-method}
+\alias{dbIsValid_adbcResult}
+\alias{dbIsValid,adbcResult-method}
+\alias{dbListFields_adbcConnection_character}
+\alias{dbListFields,adbcConnection,character-method}
+\alias{dbListTables_adbcConnection}
+\alias{dbListTables,adbcConnection-method}
+\alias{dbQuoteIdentifier_adbcConnection_character}
+\alias{dbQuoteIdentifier,adbcConnection,character-method}
+\alias{dbQuoteString_adbcConnection_character}
+\alias{dbQuoteString,adbcConnection,character-method}
+\alias{dbReadTable_adbcConnection_character}
+\alias{dbReadTable,adbcConnection,character-method}
+\alias{dbRemoveTable_adbcConnection_character}
+\alias{dbRemoveTable,adbcConnection,character-method}
+\alias{dbRollback_adbcConnection}
+\alias{dbRollback,adbcConnection-method}
+\alias{dbSendQuery_adbcConnection_character}
+\alias{dbSendQuery,adbcConnection,character-method}
+\alias{dbSendStatement_adbcConnection_character}
+\alias{dbSendStatement,adbcConnection,character-method}
+\alias{dbWriteTable_adbcConnection_character_data.frame}
+\alias{dbWriteTable,adbcConnection,character,data.frame-method}
+\alias{show_adbcConnection}
+\alias{show,adbcConnection-method}
+\alias{show_adbcDriver}
+\alias{show,adbcDriver-method}
+\alias{show_adbcResult}
+\alias{show,adbcResult-method}
 \title{DBI methods}
 \usage{
-\S4method{dbBegin}{KazamConnection}(conn, ...)
+\S4method{dbBegin}{adbcConnection}(conn, ...)
 
-\S4method{dbBind}{KazamResult}(res, params, ...)
+\S4method{dbBind}{adbcResult}(res, params, ...)
 
-\S4method{dbClearResult}{KazamResult}(res, ...)
+\S4method{dbClearResult}{adbcResult}(res, ...)
 
-\S4method{dbColumnInfo}{KazamResult}(res, ...)
+\S4method{dbColumnInfo}{adbcResult}(res, ...)
 
-\S4method{dbCommit}{KazamConnection}(conn, ...)
+\S4method{dbCommit}{adbcConnection}(conn, ...)
 
-\S4method{dbConnect}{KazamDriver}(drv, ...)
+\S4method{dbConnect}{adbcDriver}(drv, ...)
 
-\S4method{dbDataType}{KazamConnection,ANY}(dbObj, obj, ...)
+\S4method{dbDataType}{adbcConnection,ANY}(dbObj, obj, ...)
 
-\S4method{dbDataType}{KazamDriver,ANY}(dbObj, obj, ...)
+\S4method{dbDataType}{adbcDriver,ANY}(dbObj, obj, ...)
 
-\S4method{dbDataType}{KazamDriver,list}(dbObj, obj, ...)
+\S4method{dbDataType}{adbcDriver,list}(dbObj, obj, ...)
 
-\S4method{dbDisconnect}{KazamConnection}(conn, ...)
+\S4method{dbDisconnect}{adbcConnection}(conn, ...)
 
-\S4method{dbExistsTable}{KazamConnection,character}(conn, name, ...)
+\S4method{dbExistsTable}{adbcConnection,character}(conn, name, ...)
 
-\S4method{dbFetch}{KazamResult}(res, n = -1, ...)
+\S4method{dbFetch}{adbcResult}(res, n = -1, ...)
 
-\S4method{dbGetInfo}{KazamConnection}(dbObj, ...)
+\S4method{dbGetInfo}{adbcConnection}(dbObj, ...)
 
-\S4method{dbGetInfo}{KazamDriver}(dbObj, ...)
+\S4method{dbGetInfo}{adbcDriver}(dbObj, ...)
 
-\S4method{dbGetInfo}{KazamResult}(dbObj, ...)
+\S4method{dbGetInfo}{adbcResult}(dbObj, ...)
 
-\S4method{dbGetRowCount}{KazamResult}(res, ...)
+\S4method{dbGetRowCount}{adbcResult}(res, ...)
 
-\S4method{dbGetRowsAffected}{KazamResult}(res, ...)
+\S4method{dbGetRowsAffected}{adbcResult}(res, ...)
 
-\S4method{dbGetStatement}{KazamResult}(res, ...)
+\S4method{dbGetStatement}{adbcResult}(res, ...)
 
-\S4method{dbHasCompleted}{KazamResult}(res, ...)
+\S4method{dbHasCompleted}{adbcResult}(res, ...)
 
-\S4method{dbIsValid}{KazamConnection}(dbObj, ...)
+\S4method{dbIsValid}{adbcConnection}(dbObj, ...)
 
-\S4method{dbIsValid}{KazamDriver}(dbObj, ...)
+\S4method{dbIsValid}{adbcDriver}(dbObj, ...)
 
-\S4method{dbIsValid}{KazamResult}(dbObj, ...)
+\S4method{dbIsValid}{adbcResult}(dbObj, ...)
 
-\S4method{dbListFields}{KazamConnection,character}(conn, name, ...)
+\S4method{dbListFields}{adbcConnection,character}(conn, name, ...)
 
-\S4method{dbListTables}{KazamConnection}(conn, ...)
+\S4method{dbListTables}{adbcConnection}(conn, ...)
 
-\S4method{dbQuoteIdentifier}{KazamConnection,character}(conn, x, ...)
+\S4method{dbQuoteIdentifier}{adbcConnection,character}(conn, x, ...)
 
-\S4method{dbQuoteString}{KazamConnection,character}(conn, x, ...)
+\S4method{dbQuoteString}{adbcConnection,character}(conn, x, ...)
 
-\S4method{dbReadTable}{KazamConnection,character}(conn, name, ...)
+\S4method{dbReadTable}{adbcConnection,character}(conn, name, ...)
 
-\S4method{dbRemoveTable}{KazamConnection,character}(conn, name, ...)
+\S4method{dbRemoveTable}{adbcConnection,character}(conn, name, ...)
 
-\S4method{dbRollback}{KazamConnection}(conn, ...)
+\S4method{dbRollback}{adbcConnection}(conn, ...)
 
-\S4method{dbSendQuery}{KazamConnection,character}(conn, statement, ...)
+\S4method{dbSendQuery}{adbcConnection,character}(conn, statement, ...)
 
-\S4method{dbSendStatement}{KazamConnection,character}(conn, statement, ...)
+\S4method{dbSendStatement}{adbcConnection,character}(conn, statement, ...)
 
-\S4method{dbWriteTable}{KazamConnection,character,data.frame}(conn, name, value, overwrite = FALSE, append = FALSE, ...)
+\S4method{dbWriteTable}{adbcConnection,character,data.frame}(conn, name, value, overwrite = FALSE, append = FALSE, ...)
 
-\S4method{show}{KazamConnection}(object)
+\S4method{show}{adbcConnection}(object)
 
-\S4method{show}{KazamDriver}(object)
+\S4method{show}{adbcDriver}(object)
 
-\S4method{show}{KazamResult}(object)
+\S4method{show}{adbcResult}(object)
 }
 \arguments{
 \item{conn}{A \linkS4class{DBIConnection} object, as returned by

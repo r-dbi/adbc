@@ -1,10 +1,10 @@
 #' @rdname DBI
 #' @inheritParams methods::show
 #' @usage NULL
-show_KazamConnection <- function(object) {
-  cat("<KazamConnection>\n")
+show_adbcConnection <- function(object) {
+  cat("<adbcConnection>\n")
   # TODO: Print more details
 }
 #' @rdname DBI
 #' @export
-setMethod("show", "KazamConnection", show_KazamConnection)
+setMethod("show", "adbcConnection", show_adbcConnection)

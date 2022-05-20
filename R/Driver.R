@@ -7,7 +7,7 @@ NULL
 #' @name DBI
 NULL
 
-#' Kazam driver
+#' adbc driver
 #'
 #' TBD.
 #'
@@ -16,15 +16,15 @@ NULL
 #' @examples
 #' \dontrun{
 #' #' library(DBI)
-#' adbc::Kazam()
+#' adbc::adbc()
 #' }
-Kazam <- function() {
-  new("KazamDriver")
+adbc <- function() {
+  new("adbcDriver")
 }
 
 #' @rdname DBI
 #' @export
-setClass("KazamDriver", contains = "DBIDriver")
+setClass("adbcDriver", contains = "DBIDriver")
 
 #' @export
 DBI::dbCanConnect

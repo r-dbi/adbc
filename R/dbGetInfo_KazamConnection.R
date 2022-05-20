@@ -1,9 +1,9 @@
 #' @rdname DBI
 #' @inheritParams DBI::dbGetInfo
 #' @usage NULL
-dbGetInfo_KazamConnection <- function(dbObj, ...) {
+dbGetInfo_adbcConnection <- function(dbObj, ...) {
   testthat::skip("Not yet implemented: dbGetInfo(Connection)")
 }
 #' @rdname DBI
 #' @export
-setMethod("dbGetInfo", "KazamConnection", dbGetInfo_KazamConnection)
+setMethod("dbGetInfo", "adbcConnection", dbGetInfo_adbcConnection)

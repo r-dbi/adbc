@@ -11,7 +11,7 @@ Authors@R:
              role = "fnd")
     )
 Description: A dummy DBI back end that provides access to a
-    hypothetical data source named "Kazam", intended to be used as
+    hypothetical data source named "adbc", intended to be used as
     boilerplate for implementing DBI back ends from scratch.
 License: CC0
 URL: https://rkazam.r-dbi.org, https://github.com/r-dbi/adbc

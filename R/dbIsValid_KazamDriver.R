@@ -1,9 +1,9 @@
 #' @rdname DBI
 #' @inheritParams DBI::dbIsValid
 #' @usage NULL
-dbIsValid_KazamDriver <- function(dbObj, ...) {
+dbIsValid_adbcDriver <- function(dbObj, ...) {
   testthat::skip("Not yet implemented: dbIsValid(Driver)")
 }
 #' @rdname DBI
 #' @export
-setMethod("dbIsValid", "KazamDriver", dbIsValid_KazamDriver)
+setMethod("dbIsValid", "adbcDriver", dbIsValid_adbcDriver)

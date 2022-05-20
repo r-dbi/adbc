@@ -5,7 +5,7 @@
 [![Codecov test coverage](https://codecov.io/gh/r-dbi/adbc/branch/master/graph/badge.svg)](https://codecov.io/gh/r-dbi/adbc?branch=master)
 <!-- badges: end -->
 
-adbc is an DBI-compliant interface to the hypothetical Kazam database. It is intended to be used as boilerplate for new DBI backends.
+adbc is an DBI-compliant interface to the hypothetical adbc database. It is intended to be used as boilerplate for new DBI backends.
 
 ## Installation
 

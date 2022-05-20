@@ -1,15 +1,15 @@
 #' @include Driver.R
 NULL
 
-KazamConnection <- function() {
+adbcConnection <- function() {
   # TODO: Add arguments
-  new("KazamConnection")
+  new("adbcConnection")
 }
 
 #' @rdname DBI
 #' @export
 setClass(
-  "KazamConnection",
+  "adbcConnection",
   contains = "DBIConnection",
   slots = list()
 )

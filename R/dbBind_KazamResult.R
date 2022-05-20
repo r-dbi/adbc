@@ -1,9 +1,9 @@
 #' @rdname DBI
 #' @inheritParams DBI::dbBind
 #' @usage NULL
-dbBind_KazamResult <- function(res, params, ...) {
+dbBind_adbcResult <- function(res, params, ...) {
   testthat::skip("Not yet implemented: dbBind(Result)")
 }
 #' @rdname DBI
 #' @export
-setMethod("dbBind", "KazamResult", dbBind_KazamResult)
+setMethod("dbBind", "adbcResult", dbBind_adbcResult)

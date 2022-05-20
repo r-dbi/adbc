@@ -1,7 +1,7 @@
 #' @rdname DBI
 #' @inheritParams DBI::dbDisconnect
 #' @usage NULL
-dbDisconnect_KazamConnection <- function(conn, ...) {
+dbDisconnect_adbcConnection <- function(conn, ...) {
   if (!dbIsValid(conn)) {
     warning("Connection already closed.", call. = FALSE)
   }
@@ -11,4 +11,4 @@ dbDisconnect_KazamConnection <- function(conn, ...) {
 }
 #' @rdname DBI
 #' @export
-setMethod("dbDisconnect", "KazamConnection", dbDisconnect_KazamConnection)
+setMethod("dbDisconnect", "adbcConnection", dbDisconnect_adbcConnection)

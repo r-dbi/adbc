@@ -1,7 +1,7 @@
 #' @rdname DBI
 #' @inheritParams DBI::dbDataType
 #' @usage NULL
-dbDataType_KazamConnection <- function(dbObj, obj, ...) {
+dbDataType_adbcConnection <- function(dbObj, obj, ...) {
   tryCatch(
     getMethod("dbDataType", "DBIObject", asNamespace("DBI"))(dbObj, obj, ...),
     error = function(e) testthat::skip("Not yet implemented: dbDataType(Connection)")
@@ -9,4 +9,4 @@ dbDataType_KazamConnection <- function(dbObj, obj, ...) {
 }
 #' @rdname DBI
 #' @export
-setMethod("dbDataType", "KazamConnection", dbDataType_KazamConnection)
+setMethod("dbDataType", "adbcConnection", dbDataType_adbcConnection)
