@@ -17,11 +17,40 @@
 
 #pragma once
 
+#include <stddef.h>
 #include <stdint.h>
 
 struct AdbcDriver;
 
 typedef uint8_t AdbcStatusCode;
+
+/// No error.
+#define ADBC_STATUS_OK 0
+/// An unknown error occurred.
+#define ADBC_STATUS_UNKNOWN 1
+/// The operation is not implemented.
+#define ADBC_STATUS_NOT_IMPLEMENTED 2
+/// An operation was attempted on an uninitialized object.
+#define ADBC_STATUS_UNINITIALIZED 3
+/// The arguments are invalid.
+#define ADBC_STATUS_INVALID_ARGUMENT 4
+/// The object is in an invalid state for the given operation.
+#define ADBC_STATUS_INTERNAL 5
+/// An I/O error occurred.
+#define ADBC_STATUS_IO 6
+
+/// \brief Common entry point for drivers via the driver manager
+///   (which uses dlopen(3)/LoadLibrary). The driver manager is told
+///   to load a library and call a function of this type to load the
+///   driver.
+///
+/// \param[in] count The number of entries to initialize. Provides
+///   backwards compatibility if the struct definition is changed.
+/// \param[out] driver The table of function pointers to initialize.
+/// \param[out] initialized How much of the table was actually
+///   initialized (can be less than count).
+typedef AdbcStatusCode (*AdbcDriverInitFunc)(size_t count, struct AdbcDriver* driver,
+                        size_t* initialized);
 
 #ifdef __cplusplus
 extern "C" {
