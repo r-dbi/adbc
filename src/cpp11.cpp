@@ -6,17 +6,17 @@
 #include <R_ext/Visibility.h>
 
 // code.cpp
-void load_driver(const std::string connection);
-extern "C" SEXP _adbc_load_driver(SEXP connection) {
+void cpp_load_driver(const std::string connection);
+extern "C" SEXP _adbc_cpp_load_driver(SEXP connection) {
   BEGIN_CPP11
-    load_driver(cpp11::as_cpp<cpp11::decay_t<const std::string>>(connection));
+    cpp_load_driver(cpp11::as_cpp<cpp11::decay_t<const std::string>>(connection));
     return R_NilValue;
   END_CPP11
 }
 
 extern "C" {
 static const R_CallMethodDef CallEntries[] = {
-    {"_adbc_load_driver", (DL_FUNC) &_adbc_load_driver, 1},
+    {"_adbc_cpp_load_driver", (DL_FUNC) &_adbc_cpp_load_driver, 1},
     {NULL, NULL, 0}
 };
 }

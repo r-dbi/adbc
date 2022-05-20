@@ -4,7 +4,7 @@ using namespace cpp11;
 #include "adbc/adbc_driver_manager.h"
 
 [[cpp11::register]]
-void load_driver(const std::string connection) {
+void cpp_load_driver(const std::string connection) {
   AdbcDriver driver;
   // TODO: version provided by client?
   const size_t expected = ADBC_VERSION_0_0_1;
