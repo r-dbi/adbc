@@ -13,7 +13,7 @@ void cpp_load_driver(const std::string connection) {
   AdbcStatusCode success = AdbcLoadDriver(connection.c_str(), expected, &driver, &initialized);
 
   if (success != ADBC_STATUS_OK) {
-    cpp11::stop("Could not load driver: %d.", success);
+    cpp11::stop("Could not load driver: error code %d.", success);
   }
 
   if (initialized < sizeof(driver)) {
