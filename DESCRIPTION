@@ -1,0 +1,71 @@
+Package: RKazam
+Title: Boilerplate for implementing a DBI back end
+Version: 0.0.0.9003
+Authors@R: 
+    c(
+      person(given = "Kirill",
+             family = "M\u00fcller",
+             role = c("aut", "cre"),
+             email = "krlmlr+r@mailbox.org"),
+      person(given = "R Consortium",
+             role = "fnd")
+    )
+Description: A dummy DBI back end that provides access to a
+    hypothetical data source named "Kazam", intended to be used as
+    boilerplate for implementing DBI back ends from scratch.
+License: CC0
+URL: https://rkazam.r-dbi.org, https://github.com/r-dbi/RKazam
+Depends: 
+    R (>= 3.0.0)
+Imports: 
+    DBI (>= 1.1.0),
+    methods,
+    testthat
+Suggests: 
+    covr,
+    DBItest
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.0
+Collate: 
+    'RKazam.R'
+    'Driver.R'
+    'Connection.R'
+    'Result.R'
+    'dbBegin_KazamConnection.R'
+    'dbBind_KazamResult.R'
+    'dbClearResult_KazamResult.R'
+    'dbColumnInfo_KazamResult.R'
+    'dbCommit_KazamConnection.R'
+    'dbConnect_KazamDriver.R'
+    'dbDataType_KazamConnection.R'
+    'dbDataType_KazamDriver.R'
+    'dbDataType_KazamDriver_list.R'
+    'dbDisconnect_KazamConnection.R'
+    'dbExistsTable_KazamConnection_character.R'
+    'dbFetch_KazamResult.R'
+    'dbGetInfo_KazamConnection.R'
+    'dbGetInfo_KazamDriver.R'
+    'dbGetInfo_KazamResult.R'
+    'dbGetRowCount_KazamResult.R'
+    'dbGetRowsAffected_KazamResult.R'
+    'dbGetStatement_KazamResult.R'
+    'dbHasCompleted_KazamResult.R'
+    'dbIsValid_KazamConnection.R'
+    'dbIsValid_KazamDriver.R'
+    'dbIsValid_KazamResult.R'
+    'dbListFields_KazamConnection_character.R'
+    'dbListTables_KazamConnection.R'
+    'dbQuoteIdentifier_KazamConnection_character.R'
+    'dbQuoteString_KazamConnection_character.R'
+    'dbReadTable_KazamConnection_character.R'
+    'dbRemoveTable_KazamConnection_character.R'
+    'dbRollback_KazamConnection.R'
+    'dbSendQuery_KazamConnection_character.R'
+    'dbSendStatement_KazamConnection_character.R'
+    'dbWriteTable_KazamConnection_character_data.frame.R'
+    'show_KazamConnection.R'
+    'show_KazamDriver.R'
+    'show_KazamResult.R'
+Config/autostyle/scope: line_breaks
+Config/autostyle/strict: false
