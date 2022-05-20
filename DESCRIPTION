@@ -32,6 +32,7 @@ Collate:
     'Driver.R'
     'Connection.R'
     'Result.R'
+    'cpp11.R'
     'dbBegin_KazamConnection.R'
     'dbBind_KazamResult.R'
     'dbClearResult_KazamResult.R'
