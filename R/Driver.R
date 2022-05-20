@@ -1,4 +1,4 @@
-#' @include adbc.R
+#' @include adbc-package.R
 NULL
 
 #' DBI methods
