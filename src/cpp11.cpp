@@ -6,11 +6,10 @@
 #include <R_ext/Visibility.h>
 
 // code.cpp
-void cpp_load_driver(const std::string connection);
+int cpp_load_driver(const std::string connection);
 extern "C" SEXP _adbc_cpp_load_driver(SEXP connection) {
   BEGIN_CPP11
-    cpp_load_driver(cpp11::as_cpp<cpp11::decay_t<const std::string>>(connection));
-    return R_NilValue;
+    return cpp11::as_sexp(cpp_load_driver(cpp11::as_cpp<cpp11::decay_t<const std::string>>(connection)));
   END_CPP11
 }
 

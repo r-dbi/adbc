@@ -3,9 +3,15 @@ using namespace cpp11;
 
 #include "adbc/adbc_driver_manager.h"
 
+AdbcDriver driver;
+int n_drivers = 0;
+
 [[cpp11::register]]
-void cpp_load_driver(const std::string connection) {
-  AdbcDriver driver;
+int cpp_load_driver(const std::string connection) {
+  if (n_drivers > 0) {
+    cpp11::stop("Can load only one driver.");
+  }
+
   // TODO: version provided by client?
   const size_t expected = ADBC_VERSION_0_0_1;
   size_t initialized = 0;
@@ -19,4 +25,6 @@ void cpp_load_driver(const std::string connection) {
   if (initialized < expected) {
     cpp11::stop("Initialization incomplete: %d expected, %d provided.", expected, initialized);
   }
+
+  return n_drivers++;
 }
