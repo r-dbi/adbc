@@ -1,4 +1,4 @@
-PKG_CPPFLAGS=-I.
+PKG_CPPFLAGS=-I../inst/include -I.
 
 PKG_LIBS = adbc/adbc_driver_manager.o
 

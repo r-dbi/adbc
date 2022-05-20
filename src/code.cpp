@@ -1,4 +1,4 @@
-#include <cpp11.h>
+#include <cpp11.hpp>
 using namespace cpp11;
 
 #include "adbc/adbc_driver_manager.h"
