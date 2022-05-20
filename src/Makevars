@@ -1,1 +1,9 @@
 PKG_CPPFLAGS=-I.
+
+PKG_LIBS = adbc/adbc_driver_manager.o
+
+.PHONY: all
+
+all: $(SHLIB)
+
+$(SHLIB): $(PKG_LIBS)
