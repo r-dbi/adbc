@@ -1,4 +1,4 @@
-Package: RKazam
+Package: adbc
 Title: Boilerplate for implementing a DBI back end
 Version: 0.0.0.9003
 Authors@R: 
@@ -14,7 +14,7 @@ Description: A dummy DBI back end that provides access to a
     hypothetical data source named "Kazam", intended to be used as
     boilerplate for implementing DBI back ends from scratch.
 License: CC0
-URL: https://rkazam.r-dbi.org, https://github.com/r-dbi/RKazam
+URL: https://rkazam.r-dbi.org, https://github.com/r-dbi/adbc
 Depends: 
     R (>= 3.0.0)
 Imports: 
@@ -28,7 +28,7 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.0
 Collate: 
-    'RKazam.R'
+    'adbc.R'
     'Driver.R'
     'Connection.R'
     'Result.R'

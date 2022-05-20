@@ -12,6 +12,6 @@ TBD.
 \examples{
 \dontrun{
 #' library(DBI)
-RKazam::Kazam()
+adbc::Kazam()
 }
 }

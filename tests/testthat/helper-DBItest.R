@@ -4,7 +4,7 @@ DBItest::make_context(
   tweaks = suppressWarnings(DBItest::tweaks(
     dbitest_version = "1.7.2"
   )),
-  name = "RKazam",
+  name = "adbc",
   default_skip = c(
     # TODO: Remove when dbDisconnect() is implemented
     "can_disconnect",

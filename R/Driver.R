@@ -1,4 +1,4 @@
-#' @include RKazam.R
+#' @include adbc.R
 NULL
 
 #' DBI methods
@@ -16,7 +16,7 @@ NULL
 #' @examples
 #' \dontrun{
 #' #' library(DBI)
-#' RKazam::Kazam()
+#' adbc::Kazam()
 #' }
 Kazam <- function() {
   new("KazamDriver")

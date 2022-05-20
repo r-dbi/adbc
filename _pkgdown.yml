@@ -20,7 +20,7 @@ reference:
 - title: Package documentation
   contents:
   - Kazam
-  - RKazam-package
+  - adbc-package
 
 development:
   mode: auto
