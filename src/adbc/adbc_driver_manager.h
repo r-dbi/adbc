@@ -17,7 +17,11 @@
 
 #pragma once
 
-#include "adbc/adbc.h"
+#include <stdint.h>
+
+struct AdbcDriver;
+
+typedef uint8_t AdbcStatusCode;
 
 #ifdef __cplusplus
 extern "C" {
