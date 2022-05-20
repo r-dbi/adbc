@@ -6,6 +6,8 @@ DBItest::make_context(
   )),
   name = "adbc",
   default_skip = c(
+    "package_name",
+
     # TODO: Remove when dbDisconnect() is implemented
     "can_disconnect",
     "disconnect_closed_connection",
