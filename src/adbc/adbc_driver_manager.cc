@@ -67,8 +67,12 @@ AdbcStatusCode AdbcLoadDriver(const char* connection, size_t count,
     return ADBC_STATUS_UNKNOWN;
   }
 
-  auto* load =
-      reinterpret_cast<AdbcDriverInitFunc>(dlsym(handle, entrypoint_str->second.c_str()));
+  auto* entrypoint = dlsym(handle, entrypoint_str->second.c_str());
+  if (!entrypoint) {
+    return ADBC_STATUS_NOT_IMPLEMENTED;
+  }
+
+  auto* load = reinterpret_cast<AdbcDriverInitFunc>(entrypoint);
   if (!load) {
     return ADBC_STATUS_INTERNAL;
   }
