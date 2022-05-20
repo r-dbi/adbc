@@ -65,6 +65,7 @@ Collate:
     'dbSendQuery_KazamConnection_character.R'
     'dbSendStatement_KazamConnection_character.R'
     'dbWriteTable_KazamConnection_character_data.frame.R'
+    'load_driver.R'
     'show_KazamConnection.R'
     'show_KazamDriver.R'
     'show_KazamResult.R'
