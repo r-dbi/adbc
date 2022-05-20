@@ -8,11 +8,11 @@ load_driver(connection)
 }
 \arguments{
 \item{connection}{A connection string of the form
-\code{"Driver=<path-to-library>"}}
+\code{"Driver=<path-to-library>;Entrypoint=<entrypoint-name>"}}
 }
 \description{
 TBD.
 }
 \examples{
-try(load_driver("foo.so"))
+try(load_driver("Driver=foo.so;Entrypoint=init_foo"))
 }
