@@ -24,6 +24,10 @@ Requires duckdb from <https://github.com/krlmlr/duckdb/tree/adbc>.
 load_driver("Driver=~/git/R/duckdb/tools/rpkg/src/duckdb.so;Entrypoint=duckdb_adbc_driver_init")
 ```
 
+## Update vendored files
+
+Via `tools/adbc.sh`, currently requires a clean checkout at a specific path.
+
 ---
 
 Please note that the 'adbc' project is released with a
