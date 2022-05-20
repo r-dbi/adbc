@@ -16,7 +16,7 @@ void cpp_load_driver(const std::string connection) {
     cpp11::stop("Could not load driver: error code %d.", success);
   }
 
-  if (initialized < sizeof(driver)) {
+  if (initialized < expected) {
     cpp11::stop("Initialization incomplete: %d expected, %d provided.", expected, initialized);
   }
 }
