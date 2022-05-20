@@ -7,4 +7,4 @@
 ^LICENSE\.md$
 ^CODE_OF_CONDUCT\.md$
 ^tools$
-^*\.o$
+^.*\.o$
