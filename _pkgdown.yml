@@ -12,6 +12,10 @@ home:
     href: https://r-dbi.org
 
 reference:
+- title: Driver management
+  contents:
+  - load_driver
+
 - title: DBI methods
   desc: Implementations for generics defined in the DBI package.
   contents:
