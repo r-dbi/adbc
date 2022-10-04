@@ -13,7 +13,7 @@ int cpp_load_driver(const std::string connection) {
   }
 
   // TODO: version provided by client?
-  const size_t expected = ADBC_VERSION_0_0_1;
+  const size_t expected = ADBC_VERSION_1_0_0;
   size_t initialized = 0;
 
   AdbcStatusCode success = AdbcLoadDriver(connection.c_str(), expected, &driver, &initialized);
