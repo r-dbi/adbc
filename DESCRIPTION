@@ -2,11 +2,11 @@ Package: adbc
 Title: Boilerplate for implementing a DBI back end
 Version: 0.0.0.9004
 Authors@R: 
-    c(
-      person(given = "Kirill",
+    c(person(given = "Kirill",
              family = "M\u00fcller",
              role = c("aut", "cre"),
-             email = "krlmlr+r@mailbox.org"),
+             email = "kirill@cynkra.com",
+             comment = c(ORCID = "0000-0002-1416-3412")),
       person(given = "R Consortium",
              role = "fnd")
     )
