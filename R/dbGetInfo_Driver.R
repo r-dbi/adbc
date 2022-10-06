@@ -2,7 +2,11 @@
 #' @inheritParams DBI::dbGetInfo
 #' @usage NULL
 dbGetInfo_adbcDriver <- function(dbObj, ...) {
-  testthat::skip("Not yet implemented: dbGetInfo(Driver)")
+  list(
+    driver.version = parent.env(environment())$.__NAMESPACE__.$spec[["version"]],
+    # FIXME: Update when ADBC updates
+    client.version = "1.0.0"
+  )
 }
 #' @rdname DBI
 #' @export
