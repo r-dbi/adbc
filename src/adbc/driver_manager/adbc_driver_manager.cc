@@ -732,7 +732,8 @@ AdbcStatusCode AdbcLoadDriverFromInitFunc(AdbcDriverInitFunc init_func, int vers
     CHECK_REQUIRED(driver, DatabaseRelease);
     FILL_DEFAULT(driver, DatabaseSetOption);
 
-    CHECK_REQUIRED(driver, ConnectionGetInfo);
+    // https://github.com/apache/arrow-adbc/issues/149
+    // FILL_DEFAULT(driver, ConnectionGetInfo);
     CHECK_REQUIRED(driver, ConnectionNew);
     CHECK_REQUIRED(driver, ConnectionInit);
     CHECK_REQUIRED(driver, ConnectionRelease);
