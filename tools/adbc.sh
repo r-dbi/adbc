@@ -4,6 +4,7 @@ set -e
 set -x
 
 rm -rf src/adbc
-cp -r ~/git/arrow/cpp/src/adbc src/
-cp ~/git/arrow/cpp/src/arrow/c/abi.h src/adbc
-gsed -i 's#arrow/c#adbc#' src/adbc/*.cc src/adbc/*.h
+mkdir src/adbc
+cp -r ~/git/arrow-adbc/adbc.h src/adbc/
+cp -r ~/git/arrow-adbc/c/driver_manager src/adbc/driver_manager/
+# gsed -i 's#arrow/c#adbc#' src/adbc/*.cc src/adbc/*.h
