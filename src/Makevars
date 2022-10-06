@@ -1,6 +1,6 @@
-PKG_CPPFLAGS=-I../inst/include -I.
+PKG_CPPFLAGS=-I../inst/include -Iadbc
 
-PKG_LIBS = adbc/adbc_driver_manager.o
+PKG_LIBS = adbc/driver_manager/adbc_driver_manager.o
 
 .PHONY: all
 

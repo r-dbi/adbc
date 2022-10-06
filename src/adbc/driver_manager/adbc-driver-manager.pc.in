@@ -16,11 +16,11 @@
 # under the License.
 
 prefix=@CMAKE_INSTALL_PREFIX@
-libdir=${prefix}/@CMAKE_INSTALL_LIBDIR@
-includedir=${prefix}/@CMAKE_INSTALL_INCLUDEDIR@
+includedir=@ADBC_PKG_CONFIG_INCLUDEDIR@
+libdir=@ADBC_PKG_CONFIG_LIBDIR@
 
-Name: ADBC C++ Driver Utilities
-Description: C++ utilities for implementing ADBC drivers.
+Name: Apache Arrow Database Connectivity (ADBC) driver manager
+Description: ADBC driver manager provides API to use ADBC driver.
 Version: @ADBC_VERSION@
-Requires: arrow
-Libs: -L${libdir} -ladbc_driver
+Libs: -L${libdir} -ladbc_driver_manager
+Cflags: -I${includedir}

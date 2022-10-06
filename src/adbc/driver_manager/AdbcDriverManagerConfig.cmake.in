@@ -15,12 +15,10 @@
 # specific language governing permissions and limitations
 # under the License.
 
-prefix=@CMAKE_INSTALL_PREFIX@
-libdir=${prefix}/@CMAKE_INSTALL_LIBDIR@
-includedir=${prefix}/@CMAKE_INSTALL_INCLUDEDIR@
+@PACKAGE_INIT@
 
-Name: ADBC C++ Client
-Description: C++ bindings for the ADBC API.
-Version: @ADBC_VERSION@
-Requires: arrow
-Libs: -L${libdir} -ladbc_client
+set(ADBC_VERSION "@ADBC_VERSION@")
+
+include("${CMAKE_CURRENT_LIST_DIR}/AdbcDriverManagerTargets.cmake")
+
+check_required_components(AdbcDriverManager)
