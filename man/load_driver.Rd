@@ -4,15 +4,18 @@
 \alias{load_driver}
 \title{Load a driver}
 \usage{
-load_driver(connection)
+load_driver(path, entrypoint = NULL)
 }
 \arguments{
-\item{connection}{A connection string of the form
-\code{"Driver=<path-to-library>;Entrypoint=<entrypoint-name>"}}
+\item{path}{Path to the shared library}
+
+\item{entrypoint}{The name of the ADBC entry point,
+by default \code{"AdbcDriverInit"} is used.}
 }
 \description{
 TBD.
 }
 \examples{
-try(load_driver("Driver=foo.so;Entrypoint=init_foo"))
+try(load_driver("/path/to/foo.so"))
+try(load_driver("/path/to/foo.so", "foo_adbc_init"))
 }
