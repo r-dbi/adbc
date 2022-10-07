@@ -1,5 +1,5 @@
 DBItest::make_context(
-  adbc(),
+  adbc("/Users/kirill/git/R/duckdb/tools/rpkg/src/duckdb.so", "duckdb_adbc_init"),
   list(),
   tweaks = suppressWarnings(DBItest::tweaks(
     dbitest_version = "1.7.2"

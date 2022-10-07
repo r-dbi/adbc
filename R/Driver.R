@@ -13,18 +13,26 @@ NULL
 #'
 #' @export
 #' @import methods DBI
+#' @inheritParams load_driver
 #' @examples
 #' \dontrun{
 #' #' library(DBI)
 #' adbc::adbc()
 #' }
-adbc <- function() {
-  new("adbcDriver")
+adbc <- function(path, entrypoint = NULL) {
+  driver_id <- load_driver(path, entrypoint)
+  new("adbcDriver", driver_id = driver_id)
 }
 
 #' @rdname DBI
 #' @export
-setClass("adbcDriver", contains = "DBIDriver")
+setClass(
+  "adbcDriver",
+  contains = "DBIDriver",
+  slots = list(
+    driver_id = "integer"
+  )
+)
 
 #' @export
 DBI::dbCanConnect

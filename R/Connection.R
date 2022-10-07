@@ -1,9 +1,8 @@
 #' @include Driver.R
 NULL
 
-adbcConnection <- function() {
-  # TODO: Add arguments
-  new("adbcConnection")
+adbcConnection <- function(driver_id) {
+  new("adbcConnection", driver_id = driver_id)
 }
 
 #' @rdname DBI
