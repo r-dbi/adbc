@@ -7,7 +7,7 @@
 #'
 #' @export
 #' @examples
-#' try(load_driver("Driver=foo.so;Entrypoint=init_foo"))
-load_driver <- function(connection) {
-  cpp_load_driver(connection)
+#' try(load_driver("/path/to/foo.so))
+load_driver <- function(connection, entrypoint = NULL) {
+  cpp_load_driver(connection, entrypoint)
 }

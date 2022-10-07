@@ -7,7 +7,7 @@ AdbcDriver driver;
 int n_drivers = 0;
 
 [[cpp11::register]]
-int cpp_load_driver(const std::string connection) {
+int cpp_load_driver(const std::string connection, const char* entrypoint) {
   if (n_drivers > 0) {
     cpp11::stop("Can load only one driver.");
   }
@@ -17,7 +17,7 @@ int cpp_load_driver(const std::string connection) {
 
   AdbcError error = {};
 
-  AdbcStatusCode success = AdbcLoadDriver(connection.c_str(), "duckdb_adbc_init", expected, &driver, &error);
+  AdbcStatusCode success = AdbcLoadDriver(connection.c_str(), entrypoint, expected, &driver, &error);
 
   if (success != ADBC_STATUS_OK) {
     cpp11::stop("Could not load driver: error code %d: %s.", success, error.message);
