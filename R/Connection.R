@@ -1,8 +1,8 @@
 #' @include Driver.R
 NULL
 
-adbcConnection <- function(driver_id) {
-  new("adbcConnection", driver_id = driver_id)
+adbcConnection <- function(connection_id) {
+  new("adbcConnection", connection_id = connection_id)
 }
 
 #' @rdname DBI
@@ -10,7 +10,9 @@ adbcConnection <- function(driver_id) {
 setClass(
   "adbcConnection",
   contains = "DBIConnection",
-  slots = list()
+  slots = list(
+    connection_id = "integer"
+  )
 )
 
 #' @export

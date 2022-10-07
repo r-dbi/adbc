@@ -5,6 +5,21 @@
 #include "cpp11/declarations.hpp"
 #include <R_ext/Visibility.h>
 
+// connection.cpp
+int cpp_connect(const int driver_id);
+extern "C" SEXP _adbc_cpp_connect(SEXP driver_id) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(cpp_connect(cpp11::as_cpp<cpp11::decay_t<const int>>(driver_id)));
+  END_CPP11
+}
+// connection.cpp
+void cpp_disconnect(const int connection_id);
+extern "C" SEXP _adbc_cpp_disconnect(SEXP connection_id) {
+  BEGIN_CPP11
+    cpp_disconnect(cpp11::as_cpp<cpp11::decay_t<const int>>(connection_id));
+    return R_NilValue;
+  END_CPP11
+}
 // driver.cpp
 int cpp_load_driver(const std::string connection, const std::string entrypoint);
 extern "C" SEXP _adbc_cpp_load_driver(SEXP connection, SEXP entrypoint) {
@@ -15,6 +30,8 @@ extern "C" SEXP _adbc_cpp_load_driver(SEXP connection, SEXP entrypoint) {
 
 extern "C" {
 static const R_CallMethodDef CallEntries[] = {
+    {"_adbc_cpp_connect",     (DL_FUNC) &_adbc_cpp_connect,     1},
+    {"_adbc_cpp_disconnect",  (DL_FUNC) &_adbc_cpp_disconnect,  1},
     {"_adbc_cpp_load_driver", (DL_FUNC) &_adbc_cpp_load_driver, 2},
     {NULL, NULL, 0}
 };

@@ -6,7 +6,8 @@ dbDisconnect_adbcConnection <- function(conn, ...) {
     warning("Connection already closed.", call. = FALSE)
   }
 
-  # TODO: Free resources
+  cpp_disconnect(conn@connection_id)
+
   TRUE
 }
 #' @rdname DBI

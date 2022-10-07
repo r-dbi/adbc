@@ -2,8 +2,8 @@
 #' @inheritParams DBI::dbConnect
 #' @usage NULL
 dbConnect_adbcDriver <- function(drv, ...) {
-  # TODO: Implement
-  adbcConnection()
+  connection_id <- cpp_connect(drv@driver_id)
+  adbcConnection(connection_id)
 }
 #' @rdname DBI
 #' @export

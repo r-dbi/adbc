@@ -8,6 +8,14 @@ DBItest::make_context(
   default_skip = c(
     "package_name",
 
+    # Not applicable: the driver object is connected to a shared library
+    "constructor",
+
+    # TODO: Implicitly testing order of connect/disconnect
+    "table_visible_in_other_connection",
+    "create_table_visible_in_other_connection",
+    "begin_write_disconnect",
+
     # TODO: Remove when dbDisconnect() is implemented
     "can_disconnect",
     "disconnect_closed_connection",
