@@ -5,7 +5,7 @@
 #include "cpp11/declarations.hpp"
 #include <R_ext/Visibility.h>
 
-// code.cpp
+// driver.cpp
 int cpp_load_driver(const std::string connection, const std::string entrypoint);
 extern "C" SEXP _adbc_cpp_load_driver(SEXP connection, SEXP entrypoint) {
   BEGIN_CPP11
