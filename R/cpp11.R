@@ -11,3 +11,11 @@ cpp_disconnect <- function(connection_id) {
 cpp_load_driver <- function(connection, entrypoint) {
   .Call(`_adbc_cpp_load_driver`, connection, entrypoint)
 }
+
+cpp_send_query <- function(connection_id, sql) {
+  .Call(`_adbc_cpp_send_query`, connection_id, sql)
+}
+
+cpp_clear_result <- function(connection_id) {
+  invisible(.Call(`_adbc_cpp_clear_result`, connection_id))
+}

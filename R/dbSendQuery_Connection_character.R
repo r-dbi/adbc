@@ -2,9 +2,9 @@
 #' @inheritParams DBI::dbSendQuery
 #' @usage NULL
 dbSendQuery_adbcConnection_character <- function(conn, statement, ...) {
-  # TODO: Implement, remove skip() call
-  testthat::skip("Not sending query")
-  adbcResult(connection = conn, statement = statement)
+  record_batch_reader <- cpp_send_query(conn@connection_id, statement)
+
+  adbcResult(connection = conn, statement = statement, record_batch_reader = record_batch_reader)
 }
 #' @rdname DBI
 #' @export

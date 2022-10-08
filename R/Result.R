@@ -1,9 +1,8 @@
 #' @include Connection.R
 NULL
 
-adbcResult <- function(connection, statement) {
-  # TODO: Initialize result
-  new("adbcResult", connection = connection, statement = statement)
+adbcResult <- function(connection, statement, record_batch_reader) {
+  new("adbcResult", connection = connection, statement = statement, record_batch_reader = record_batch_reader)
 }
 
 #' @rdname DBI
@@ -13,6 +12,7 @@ setClass(
   contains = "DBIResult",
   slots = list(
     connection = "adbcConnection",
-    statement = "character"
+    statement = "character",
+    record_batch_reader = "ANY"
   )
 )

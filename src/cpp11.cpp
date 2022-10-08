@@ -27,12 +27,29 @@ extern "C" SEXP _adbc_cpp_load_driver(SEXP connection, SEXP entrypoint) {
     return cpp11::as_sexp(cpp_load_driver(cpp11::as_cpp<cpp11::decay_t<const std::string>>(connection), cpp11::as_cpp<cpp11::decay_t<const std::string>>(entrypoint)));
   END_CPP11
 }
+// result.cpp
+SEXP cpp_send_query(const int connection_id, std::string sql);
+extern "C" SEXP _adbc_cpp_send_query(SEXP connection_id, SEXP sql) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(cpp_send_query(cpp11::as_cpp<cpp11::decay_t<const int>>(connection_id), cpp11::as_cpp<cpp11::decay_t<std::string>>(sql)));
+  END_CPP11
+}
+// result.cpp
+void cpp_clear_result(const int connection_id);
+extern "C" SEXP _adbc_cpp_clear_result(SEXP connection_id) {
+  BEGIN_CPP11
+    cpp_clear_result(cpp11::as_cpp<cpp11::decay_t<const int>>(connection_id));
+    return R_NilValue;
+  END_CPP11
+}
 
 extern "C" {
 static const R_CallMethodDef CallEntries[] = {
-    {"_adbc_cpp_connect",     (DL_FUNC) &_adbc_cpp_connect,     1},
-    {"_adbc_cpp_disconnect",  (DL_FUNC) &_adbc_cpp_disconnect,  1},
-    {"_adbc_cpp_load_driver", (DL_FUNC) &_adbc_cpp_load_driver, 2},
+    {"_adbc_cpp_clear_result", (DL_FUNC) &_adbc_cpp_clear_result, 1},
+    {"_adbc_cpp_connect",      (DL_FUNC) &_adbc_cpp_connect,      1},
+    {"_adbc_cpp_disconnect",   (DL_FUNC) &_adbc_cpp_disconnect,   1},
+    {"_adbc_cpp_load_driver",  (DL_FUNC) &_adbc_cpp_load_driver,  2},
+    {"_adbc_cpp_send_query",   (DL_FUNC) &_adbc_cpp_send_query,   2},
     {NULL, NULL, 0}
 };
 }

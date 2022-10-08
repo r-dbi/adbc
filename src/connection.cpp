@@ -1,7 +1,7 @@
 #include <cpp11.hpp>
 using namespace cpp11;
 
-#include <driver_manager/adbc_driver_manager.h>
+#include <adbc.h>
 
 extern AdbcDriver driver;
 
