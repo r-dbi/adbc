@@ -52,6 +52,35 @@ SEXP cpp_send_query(const int connection_id, std::string sql) {
 }
 
 [[cpp11::register]]
+double cpp_send_statement(const int connection_id, std::string sql) {
+  if (connection_id >= MAX_CONNECTIONS) {
+    stop("Invalid connection ID: %d.", connection_id);
+  }
+  if (active[connection_id]) {
+    stop("Query is active: %d.", connection_id);
+  }
+
+  AdbcStatusCode adbc_status;
+  AdbcError adbc_error;
+
+  adbc_status = driver.StatementNew(&adbc_connections[connection_id], &adbc_statements[connection_id], &adbc_error);
+  REQUIRE(adbc_status == ADBC_STATUS_OK);
+
+  adbc_status = driver.StatementSetSqlQuery(&adbc_statements[connection_id], sql.c_str(), &adbc_error);
+  REQUIRE(adbc_status == ADBC_STATUS_OK);
+
+  int64_t rows_affected;
+
+  adbc_status = driver.StatementExecuteQuery(&adbc_statements[connection_id], NULL, &rows_affected, &adbc_error);
+  REQUIRE(adbc_status == ADBC_STATUS_OK);
+
+  adbc_status = driver.StatementRelease(&adbc_statements[connection_id], &adbc_error);
+  REQUIRE(adbc_status == ADBC_STATUS_OK);
+
+  return static_cast<double>(rows_affected);
+}
+
+[[cpp11::register]]
 void cpp_clear_result(const int connection_id) {
   if (connection_id >= MAX_CONNECTIONS) {
     stop("Invalid connection ID: %d.", connection_id);

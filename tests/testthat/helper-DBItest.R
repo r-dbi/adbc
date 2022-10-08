@@ -35,6 +35,10 @@ DBItest::make_context(
     "get_query_syntax_error",
     "get_query_zero_rows",
     "quote_identifier_string",
+    "send_statement_non_string",
+    "send_statement_syntax_error",
+    "execute_non_string",
+    "execute_syntax_error",
 
     # TODO: behavior
     "send_query_only_one_result_set",
@@ -56,6 +60,10 @@ DBItest::make_context(
     "get_query_n_zero_rows",
     "get_query_n_incomplete",
     "get_query_params",
+    "fetch_no_return_value",
+    "cannot_clear_result_twice_statement",
+    "send_statement_stale_warning",
+    "send_statement_only_one_result_set",
 
     # TODO: Remove when dbDisconnect() is implemented
     "can_disconnect",

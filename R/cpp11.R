@@ -16,6 +16,10 @@ cpp_send_query <- function(connection_id, sql) {
   .Call(`_adbc_cpp_send_query`, connection_id, sql)
 }
 
+cpp_send_statement <- function(connection_id, sql) {
+  .Call(`_adbc_cpp_send_statement`, connection_id, sql)
+}
+
 cpp_clear_result <- function(connection_id) {
   invisible(.Call(`_adbc_cpp_clear_result`, connection_id))
 }

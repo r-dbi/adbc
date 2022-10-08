@@ -2,7 +2,11 @@
 #' @inheritParams DBI::dbClearResult
 #' @usage NULL
 dbClearResult_adbcResult <- function(res, ...) {
-  cpp_clear_result(res@connection@connection_id)
+  if (res@need_clear) {
+    cpp_clear_result(res@connection@connection_id)
+  }
+
+  invisible(TRUE)
 }
 #' @rdname DBI
 #' @export
