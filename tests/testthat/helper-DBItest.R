@@ -41,6 +41,14 @@ DBItest::make_context(
     "execute_non_string",
     "execute_syntax_error",
     "execute_params",
+    "create_table_error",
+    "append_table_missing",
+    "roundtrip_timestamp",
+    "exists_table",
+    "exists_table_temporary",
+    "list_fields_wrong_table",
+    "create_roundtrip_quotes",
+    "append_table_new",
 
     # TODO: behavior
     "send_query_only_one_result_set",
