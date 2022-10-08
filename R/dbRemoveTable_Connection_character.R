@@ -2,7 +2,7 @@
 #' @inheritParams DBI::dbRemoveTable
 #' @usage NULL
 dbRemoveTable_adbcConnection_character <- function(conn, name, ...) {
-  testthat::skip("Not yet implemented: dbRemoveTable(Connection, character)")
+  callNextMethod(...)
 }
 #' @rdname DBI
 #' @export
