@@ -66,6 +66,7 @@ DBItest::make_context(
     "cannot_clear_result_twice_statement",
     "send_statement_stale_warning",
     "send_statement_only_one_result_set",
+    "data_logical",
 
     # TODO: Remove when dbDisconnect() is implemented
     "can_disconnect",
