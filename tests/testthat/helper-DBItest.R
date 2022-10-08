@@ -37,8 +37,10 @@ DBItest::make_context(
     "quote_identifier_string",
     "send_statement_non_string",
     "send_statement_syntax_error",
+    "send_statement_params",
     "execute_non_string",
     "execute_syntax_error",
+    "execute_params",
 
     # TODO: behavior
     "send_query_only_one_result_set",
