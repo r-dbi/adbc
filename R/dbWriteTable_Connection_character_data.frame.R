@@ -30,20 +30,16 @@ dbWriteTable_adbcConnection_character_data.frame <- function(conn, name, value, 
     stop("Cannot specify `field.types` with `append = TRUE`")
   }
 
-  found <- dbExistsTable(conn, name)
-  if (found && !overwrite && !append) {
-    stop("Table ", name, " exists in database, and both overwrite and",
-         " append are FALSE",
-         call. = FALSE
+  if (overwrite) {
+    tryCatch(
+      dbRemoveTable(conn, name),
+      error = function(e) {}
     )
-  }
-  if (found && overwrite) {
-    dbRemoveTable(conn, name)
   }
 
   value <- sqlRownamesToColumn(value, row.names)
 
-  if (!found || overwrite) {
+  if (!append || overwrite) {
     if (is.null(field.types)) {
       combined_field_types <- lapply(value, dbDataType, dbObj = conn)
     } else {
