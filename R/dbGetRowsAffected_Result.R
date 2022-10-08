@@ -2,7 +2,7 @@
 #' @inheritParams DBI::dbGetRowsAffected
 #' @usage NULL
 dbGetRowsAffected_adbcResult <- function(res, ...) {
-  testthat::skip("Not yet implemented: dbGetRowsAffected(Result)")
+  res@rows_affected
 }
 #' @rdname DBI
 #' @export
