@@ -29,7 +29,6 @@ DBItest::make_context(
 
     # TODO: segfault
     "fetch_zero_rows",
-    "append_roundtrip_.*",
 
     # TODO: behavior
     "send_query_only_one_result_set",
