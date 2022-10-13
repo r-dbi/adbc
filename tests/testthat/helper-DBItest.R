@@ -62,6 +62,13 @@ DBItest::make_context(
     "get_rows_affected_error",
     "has_completed_query_spec",
     "has_completed_query_spec_partial",
+    "append_roundtrip_timestamp",
+    "roundtrip_timestamp",
+    "append_roundtrip_timestamp_extended",
+    "roundtrip_timestamp_extended",
+    "exists_table_error",
+    "append_table_new",
+    "rows_affected_statement",
 
     # TODO: Remove when dbDisconnect() is implemented
     "can_disconnect",

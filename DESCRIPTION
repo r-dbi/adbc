@@ -33,6 +33,7 @@ Collate:
     'Connection.R'
     'Result.R'
     'cpp11.R'
+    'dbAppendTable_Connection_character_data.frame.R'
     'dbBegin_Connection.R'
     'dbBind_Result.R'
     'dbClearResult_Result.R'
