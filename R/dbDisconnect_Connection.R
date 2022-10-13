@@ -8,7 +8,7 @@ dbDisconnect_adbcConnection <- function(conn, ...) {
 
   cpp_disconnect(conn@connection_id)
 
-  TRUE
+  invisible(TRUE)
 }
 #' @rdname DBI
 #' @export

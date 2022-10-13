@@ -15,7 +15,7 @@ dbRemoveTable_adbcConnection_character <- function(conn, name, ...,
 
   dbExecute(conn, sql)
 
-  TRUE
+  invisible(TRUE)
 }
 #' @rdname DBI
 #' @export
