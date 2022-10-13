@@ -1,7 +1,11 @@
 #' @rdname DBI
 #' @inheritParams DBI::dbSendQuery
 #' @usage NULL
-dbSendQuery_adbcConnection_character <- function(conn, statement, ...) {
+dbSendQuery_adbcConnection_character <- function(conn, statement, ..., params = NULL) {
+  if (!is.null(params)) {
+    testthat::skip("Not yet implemented: dbSendQuery(params = )")
+  }
+
   record_batch_reader <- cpp_send_query(conn@connection_id, statement)
 
   adbcResult(connection = conn, statement = statement, need_clear = TRUE, record_batch_reader = record_batch_reader)
