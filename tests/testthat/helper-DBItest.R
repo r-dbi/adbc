@@ -28,27 +28,8 @@ DBItest::make_context(
     "connect_bigint_character",
 
     # TODO: segfault
-    "send_query_non_string",
-    "send_query_syntax_error",
     "fetch_zero_rows",
-    "get_query_non_string",
-    "get_query_syntax_error",
-    "get_query_zero_rows",
-    "quote_identifier_string",
-    "send_statement_non_string",
-    "send_statement_syntax_error",
-    "send_statement_params",
-    "execute_non_string",
-    "execute_syntax_error",
-    "execute_params",
-    "create_table_error",
-    "append_table_missing",
-    "roundtrip_timestamp",
-    "exists_table",
-    "exists_table_temporary",
-    "list_fields_wrong_table",
-    "create_roundtrip_quotes",
-    "append_table_new",
+    "append_roundtrip_.*",
 
     # TODO: behavior
     "send_query_only_one_result_set",
@@ -75,6 +56,13 @@ DBItest::make_context(
     "send_statement_stale_warning",
     "send_statement_only_one_result_set",
     "data_logical",
+    "exists_table_closed_connection",
+    "exists_table_invalid_connection",
+    "bind_.*",
+    "rows_affected_query",
+    "get_rows_affected_error",
+    "has_completed_query_spec",
+    "has_completed_query_spec_partial",
 
     # TODO: Remove when dbDisconnect() is implemented
     "can_disconnect",
