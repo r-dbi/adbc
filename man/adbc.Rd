@@ -4,7 +4,13 @@
 \alias{adbc}
 \title{adbc driver}
 \usage{
-adbc()
+adbc(path, entrypoint = NULL)
+}
+\arguments{
+\item{path}{Path to the shared library}
+
+\item{entrypoint}{The name of the ADBC entry point,
+by default \code{"AdbcDriverInit"} is used.}
 }
 \description{
 TBD.
