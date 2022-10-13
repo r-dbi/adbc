@@ -17,6 +17,11 @@ bool active[MAX_CONNECTIONS];
   stop(__FILE__ ":%d: Can't query: %s", __LINE__, adbc_error.message); \
   }} while (0)
 
+#define REQUIRE_CLEANUP(predicate, cleanup) do { if (!(predicate)) {   \
+  cleanup;                                                             \
+  stop(__FILE__ ":%d: Can't query: %s", __LINE__, adbc_error.message); \
+  }} while (0)
+
 [[cpp11::register]]
 SEXP cpp_send_query(const int connection_id, std::string sql) {
   if (connection_id >= MAX_CONNECTIONS) {
@@ -67,12 +72,12 @@ double cpp_send_statement(const int connection_id, std::string sql) {
   REQUIRE(adbc_status == ADBC_STATUS_OK);
 
   adbc_status = driver.StatementSetSqlQuery(&adbc_statements[connection_id], sql.c_str(), &adbc_error);
-  REQUIRE(adbc_status == ADBC_STATUS_OK);
+  REQUIRE_CLEANUP(adbc_status == ADBC_STATUS_OK, driver.StatementRelease(&adbc_statements[connection_id], NULL));
 
   int64_t rows_affected;
 
   adbc_status = driver.StatementExecuteQuery(&adbc_statements[connection_id], NULL, &rows_affected, &adbc_error);
-  REQUIRE(adbc_status == ADBC_STATUS_OK);
+  REQUIRE_CLEANUP(adbc_status == ADBC_STATUS_OK, driver.StatementRelease(&adbc_statements[connection_id], NULL));
 
   adbc_status = driver.StatementRelease(&adbc_statements[connection_id], &adbc_error);
   REQUIRE(adbc_status == ADBC_STATUS_OK);
