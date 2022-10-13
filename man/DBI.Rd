@@ -12,7 +12,6 @@
 %   R/dbIsValid_Result.R, R/dbListFields_Connection_character.R,
 %   R/dbListTables_Connection.R, R/dbQuoteIdentifier_Connection_character.R,
 %   R/dbQuoteString_Connection_character.R,
-%   R/dbReadTable_Connection_character.R,
 %   R/dbRemoveTable_Connection_character.R,
 %   R/dbRollback_Connection.R, R/dbSendQuery_Connection_character.R,
 %   R/dbSendStatement_Connection_character.R,
@@ -76,8 +75,6 @@
 \alias{dbQuoteIdentifier,adbcConnection,character-method}
 \alias{dbQuoteString_adbcConnection_character}
 \alias{dbQuoteString,adbcConnection,character-method}
-\alias{dbReadTable_adbcConnection_character}
-\alias{dbReadTable,adbcConnection,character-method}
 \alias{dbRemoveTable_adbcConnection_character}
 \alias{dbRemoveTable,adbcConnection,character-method}
 \alias{dbRollback_adbcConnection}
@@ -147,8 +144,6 @@
 \S4method{dbQuoteIdentifier}{adbcConnection,character}(conn, x, ...)
 
 \S4method{dbQuoteString}{adbcConnection,character}(conn, x, ...)
-
-\S4method{dbReadTable}{adbcConnection,character}(conn, name, ...)
 
 \S4method{dbRemoveTable}{adbcConnection,character}(conn, name, ..., temporary = FALSE, fail_if_missing = TRUE)
 

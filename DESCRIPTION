@@ -60,7 +60,6 @@ Collate:
     'dbListTables_Connection.R'
     'dbQuoteIdentifier_Connection_character.R'
     'dbQuoteString_Connection_character.R'
-    'dbReadTable_Connection_character.R'
     'dbRemoveTable_Connection_character.R'
     'dbRollback_Connection.R'
     'dbSendQuery_Connection_character.R'

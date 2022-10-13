@@ -69,6 +69,16 @@ DBItest::make_context(
     "exists_table_error",
     "append_table_new",
     "rows_affected_statement",
+    "roundtrip_blob",
+    "roundtrip_raw",
+    "roundtrip_64_bit_roundtrip",
+    "roundtrip_logical",
+    "append_roundtrip_blob",
+    "append_roundtrip_raw",
+    "append_roundtrip_factor",
+    "append_roundtrip_64_bit_roundtrip",
+    "append_roundtrip_logical",
+    "begin_write_commit",
 
     # TODO: Remove when dbDisconnect() is implemented
     "can_disconnect",
