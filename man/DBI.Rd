@@ -158,7 +158,17 @@
 
 \S4method{dbSendStatement}{adbcConnection,character}(conn, statement, ...)
 
-\S4method{dbWriteTable}{adbcConnection,character,data.frame}(conn, name, value, overwrite = FALSE, append = FALSE, ...)
+\S4method{dbWriteTable}{adbcConnection,character,data.frame}(
+  conn,
+  name,
+  value,
+  overwrite = FALSE,
+  append = FALSE,
+  ...,
+  field.types = NULL,
+  row.names = NULL,
+  temporary = FALSE
+)
 
 \S4method{show}{adbcConnection}(object)
 
