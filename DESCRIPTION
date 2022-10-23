@@ -26,6 +26,7 @@ Suggests:
     duckdb,
     DBItest
 Remotes: 
+    r-dbi/DBI,
     krlmlr/duckdb/tools/rpkg@adbc-18
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
