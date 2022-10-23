@@ -23,8 +23,10 @@ Imports:
     testthat
 Suggests: 
     covr,
+    dbplyr,
     duckdb,
-    DBItest
+    DBItest,
+    vctrs
 Remotes: 
     r-dbi/DBI,
     krlmlr/duckdb/tools/rpkg@adbc-18
@@ -69,10 +71,12 @@ Collate:
     'dbSendQuery_Connection_character.R'
     'dbSendStatement_Connection_character.R'
     'dbWriteTable_Connection_character_data.frame.R'
+    'dbplyr.R'
     'load_driver.R'
     'show_Connection.R'
     'show_Driver.R'
     'show_Result.R'
+    'zzz.R'
 Config/autostyle/scope: line_breaks
 Config/autostyle/strict: false
 SystemRequirements: C++11
