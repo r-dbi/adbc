@@ -23,7 +23,10 @@ Imports:
     testthat
 Suggests: 
     covr,
+    duckdb,
     DBItest
+Remotes: 
+    krlmlr/duckdb/tools/rpkg@adbc-18
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.1
