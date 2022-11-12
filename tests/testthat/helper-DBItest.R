@@ -1,5 +1,5 @@
 DBItest::make_context(
-  adbc(asNamespace("duckdb")$.__NAMESPACE__.$DLLs$duckdb[["path"]], "duckdb_adbc_init"),
+  adbc(asNamespace("duckadbc")$.__NAMESPACE__.$DLLs$duckadbc[["path"]], "duckdb_adbc_init"),
   list(),
   tweaks = suppressWarnings(DBItest::tweaks(
     dbitest_version = "1.7.2",
