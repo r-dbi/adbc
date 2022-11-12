@@ -26,3 +26,13 @@ int cpp_load_driver(const std::string connection, const std::string entrypoint) 
 
   return n_drivers++;
 }
+
+[[cpp11::register]]
+int cpp_use_radbc_driver(cpp11::external_pointer<AdbcDriver> driver_) {
+  if (n_drivers > 0) {
+    cpp11::stop("Can load only one driver.");
+  }
+
+  *&driver = *driver_;
+  return n_drivers++;
+}

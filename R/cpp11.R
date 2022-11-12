@@ -12,6 +12,10 @@ cpp_load_driver <- function(connection, entrypoint) {
   .Call(`_adbc_cpp_load_driver`, connection, entrypoint)
 }
 
+cpp_use_radbc_driver <- function(driver_) {
+  .Call(`_adbc_cpp_use_radbc_driver`, driver_)
+}
+
 cpp_send_query <- function(connection_id, sql) {
   .Call(`_adbc_cpp_send_query`, connection_id, sql)
 }

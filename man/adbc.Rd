@@ -2,9 +2,12 @@
 % Please edit documentation in R/Driver.R
 \name{adbc}
 \alias{adbc}
+\alias{from_radbc}
 \title{adbc driver}
 \usage{
 adbc(path, entrypoint = NULL)
+
+from_radbc(radbc)
 }
 \arguments{
 \item{path}{Path to the shared library}

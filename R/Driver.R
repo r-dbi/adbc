@@ -24,6 +24,14 @@ adbc <- function(path, entrypoint = NULL) {
   new("adbcDriver", driver_id = driver_id)
 }
 
+#' @export
+#' @rdname adbc
+from_radbc <- function(radbc) {
+  stopifnot(inherits(radbc, "radbc_xptr"))
+  driver_id <- cpp_use_radbc_driver(radbc)
+  new("adbcDriver", driver_id = driver_id)
+}
+
 #' @rdname DBI
 #' @export
 setClass(
