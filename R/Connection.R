@@ -31,6 +31,9 @@ DBI::dbGetQuery
 DBI::dbExecute
 
 #' @export
+DBI::dbReadTable
+
+#' @export
 DBI::dbCreateTable
 
 #' @export

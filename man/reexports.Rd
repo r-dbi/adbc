@@ -10,6 +10,7 @@
 \alias{dbUnquoteIdentifier}
 \alias{dbGetQuery}
 \alias{dbExecute}
+\alias{dbReadTable}
 \alias{dbCreateTable}
 \alias{dbAppendTable}
 \alias{dbListObjects}
