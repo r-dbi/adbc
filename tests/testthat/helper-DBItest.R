@@ -1,3 +1,5 @@
+if (is.null(DBItest::get_default_context())) {
+
 DBItest::make_context(
   adbc(asNamespace("duckadbc")$.__NAMESPACE__.$DLLs$duckadbc[["path"]], "duckdb_adbc_init"),
   list(),
@@ -94,3 +96,5 @@ DBItest::make_context(
     NULL
   )
 )
+
+} # if (is.null(DBItest::get_default_context())) {
