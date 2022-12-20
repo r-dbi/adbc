@@ -9,7 +9,7 @@ int n_drivers = 0;
 [[cpp11::register]]
 int cpp_load_driver(const std::string connection, const std::string entrypoint) {
   if (n_drivers > 0) {
-    cpp11::stop("Can load only one driver.");
+    cpp11::stop("cpp_load_driver(): Can load only one driver.");
   }
 
   // TODO: version provided by client?
@@ -30,7 +30,7 @@ int cpp_load_driver(const std::string connection, const std::string entrypoint) 
 [[cpp11::register]]
 int cpp_use_radbc_driver(cpp11::external_pointer<AdbcDriver> driver_) {
   if (n_drivers > 0) {
-    cpp11::stop("Can load only one driver.");
+    cpp11::stop("cpp_use_radbc_driver(): Can load only one driver.");
   }
 
   *&driver = *driver_;
