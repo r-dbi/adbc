@@ -24,7 +24,7 @@ Imports:
 Suggests: 
     covr,
     dbplyr,
-    duckdb,
+    duckadbc,
     DBItest,
     vctrs
 Remotes: 
