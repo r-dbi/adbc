@@ -138,14 +138,14 @@ AdbcStatusCode ConnectionCommit(struct AdbcConnection*, struct AdbcError* error)
 }
 
 AdbcStatusCode ConnectionGetInfo(struct AdbcConnection* connection, uint32_t* info_codes,
-                                 size_t info_codes_length, struct ArrowArrayStream* out,
+                                 size_t info_codes_length, struct ArrowArrayArrow* out,
                                  struct AdbcError* error) {
   return ADBC_STATUS_NOT_IMPLEMENTED;
 }
 
 AdbcStatusCode ConnectionGetObjects(struct AdbcConnection*, int, const char*, const char*,
                                     const char*, const char**, const char*,
-                                    struct ArrowArrayStream*, struct AdbcError* error) {
+                                    struct ArrowArrayArrow*, struct AdbcError* error) {
   return ADBC_STATUS_NOT_IMPLEMENTED;
 }
 
@@ -155,7 +155,7 @@ AdbcStatusCode ConnectionGetTableSchema(struct AdbcConnection*, const char*, con
   return ADBC_STATUS_NOT_IMPLEMENTED;
 }
 
-AdbcStatusCode ConnectionGetTableTypes(struct AdbcConnection*, struct ArrowArrayStream*,
+AdbcStatusCode ConnectionGetTableTypes(struct AdbcConnection*, struct ArrowArrayArrow*,
                                        struct AdbcError* error) {
   return ADBC_STATUS_NOT_IMPLEMENTED;
 }
@@ -163,7 +163,7 @@ AdbcStatusCode ConnectionGetTableTypes(struct AdbcConnection*, struct ArrowArray
 AdbcStatusCode ConnectionReadPartition(struct AdbcConnection* connection,
                                        const uint8_t* serialized_partition,
                                        size_t serialized_length,
-                                       struct ArrowArrayStream* out,
+                                       struct ArrowArrayArrow* out,
                                        struct AdbcError* error) {
   return ADBC_STATUS_NOT_IMPLEMENTED;
 }
@@ -359,7 +359,7 @@ AdbcStatusCode AdbcConnectionCommit(struct AdbcConnection* connection,
 
 AdbcStatusCode AdbcConnectionGetInfo(struct AdbcConnection* connection,
                                      uint32_t* info_codes, size_t info_codes_length,
-                                     struct ArrowArrayStream* out,
+                                     struct ArrowArrayArrow* out,
                                      struct AdbcError* error) {
   if (!connection->private_driver) {
     return ADBC_STATUS_INVALID_STATE;
@@ -372,7 +372,7 @@ AdbcStatusCode AdbcConnectionGetObjects(struct AdbcConnection* connection, int d
                                         const char* catalog, const char* db_schema,
                                         const char* table_name, const char** table_types,
                                         const char* column_name,
-                                        struct ArrowArrayStream* stream,
+                                        struct ArrowArrayArrow* stream,
                                         struct AdbcError* error) {
   if (!connection->private_driver) {
     return ADBC_STATUS_INVALID_STATE;
@@ -395,7 +395,7 @@ AdbcStatusCode AdbcConnectionGetTableSchema(struct AdbcConnection* connection,
 }
 
 AdbcStatusCode AdbcConnectionGetTableTypes(struct AdbcConnection* connection,
-                                           struct ArrowArrayStream* stream,
+                                           struct ArrowArrayArrow* stream,
                                            struct AdbcError* error) {
   if (!connection->private_driver) {
     return ADBC_STATUS_INVALID_STATE;
@@ -437,7 +437,7 @@ AdbcStatusCode AdbcConnectionNew(struct AdbcConnection* connection,
 AdbcStatusCode AdbcConnectionReadPartition(struct AdbcConnection* connection,
                                            const uint8_t* serialized_partition,
                                            size_t serialized_length,
-                                           struct ArrowArrayStream* out,
+                                           struct ArrowArrayArrow* out,
                                            struct AdbcError* error) {
   if (!connection->private_driver) {
     return ADBC_STATUS_INVALID_STATE;
@@ -487,13 +487,13 @@ AdbcStatusCode AdbcStatementBind(struct AdbcStatement* statement,
   return statement->private_driver->StatementBind(statement, values, schema, error);
 }
 
-AdbcStatusCode AdbcStatementBindStream(struct AdbcStatement* statement,
-                                       struct ArrowArrayStream* stream,
+AdbcStatusCode AdbcStatementBindArrow(struct AdbcStatement* statement,
+                                       struct ArrowArrayArrow* stream,
                                        struct AdbcError* error) {
   if (!statement->private_driver) {
     return ADBC_STATUS_INVALID_STATE;
   }
-  return statement->private_driver->StatementBindStream(statement, stream, error);
+  return statement->private_driver->StatementBindArrow(statement, stream, error);
 }
 
 // XXX: cpplint gets confused here if declared as 'struct ArrowSchema* schema'
@@ -510,7 +510,7 @@ AdbcStatusCode AdbcStatementExecutePartitions(struct AdbcStatement* statement,
 }
 
 AdbcStatusCode AdbcStatementExecuteQuery(struct AdbcStatement* statement,
-                                         struct ArrowArrayStream* out,
+                                         struct ArrowArrayArrow* out,
                                          int64_t* rows_affected,
                                          struct AdbcError* error) {
   if (!statement->private_driver) {

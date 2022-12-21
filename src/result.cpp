@@ -33,7 +33,7 @@ SEXP cpp_send_query(const int connection_id, std::string sql) {
 
   AdbcStatusCode adbc_status;
   AdbcError adbc_error;
-  ArrowArrayStream arrow_stream;
+  ArrowArrayArrow arrow_fetch_arrow;
 
   adbc_status = driver.StatementNew(&adbc_connections[connection_id], &adbc_statements[connection_id], &adbc_error);
   REQUIRE(adbc_status == ADBC_STATUS_OK);
@@ -41,14 +41,14 @@ SEXP cpp_send_query(const int connection_id, std::string sql) {
   adbc_status = driver.StatementSetSqlQuery(&adbc_statements[connection_id], sql.c_str(), &adbc_error);
   REQUIRE(adbc_status == ADBC_STATUS_OK);
 
-  adbc_status = driver.StatementExecuteQuery(&adbc_statements[connection_id], &arrow_stream, NULL, &adbc_error);
+  adbc_status = driver.StatementExecuteQuery(&adbc_statements[connection_id], &arrow_fetch_arrow, NULL, &adbc_error);
   REQUIRE(adbc_status == ADBC_STATUS_OK);
 
   cpp11::function getNamespace = Rf_install("getNamespace");
   cpp11::sexp arrow_namespace(getNamespace("arrow"));
 
   cpp11::sexp stream_ptr_sexp(
-      Rf_ScalarReal(static_cast<double>(reinterpret_cast<uintptr_t>(&arrow_stream))));
+      Rf_ScalarReal(static_cast<double>(reinterpret_cast<uintptr_t>(&arrow_fetch_arrow))));
   cpp11::sexp record_batch_reader(Rf_lang2(Rf_install("ImportRecordBatchReader"), stream_ptr_sexp));
   cpp11::sexp out = cpp11::safe[Rf_eval](record_batch_reader, arrow_namespace);
 

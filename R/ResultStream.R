@@ -1,10 +1,10 @@
 #' @include Connection.R
 NULL
 
-adbcResultStream <- function(connection, statement, need_clear,
+adbcResultArrow <- function(connection, statement, need_clear,
                              record_batch_reader = NULL,
                              rows_affected = NULL) {
-  new("adbcResultStream",
+  new("adbcResultArrow",
     connection = connection,
     statement = statement,
     need_clear = need_clear,
@@ -16,8 +16,8 @@ adbcResultStream <- function(connection, statement, need_clear,
 #' @rdname DBI
 #' @export
 setClass(
-  "adbcResultStream",
-  contains = "DBIResultStream",
+  "adbcResultArrow",
+  contains = "DBIResultArrow",
   slots = list(
     connection = "adbcConnection",
     statement = "character",
