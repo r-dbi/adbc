@@ -2,8 +2,8 @@
 NULL
 
 adbcResultArrow <- function(connection, statement, need_clear,
-                             record_batch_reader = NULL,
-                             rows_affected = NULL) {
+                            record_batch_reader = NULL,
+                            rows_affected = NULL) {
   new("adbcResultArrow",
     connection = connection,
     statement = statement,
