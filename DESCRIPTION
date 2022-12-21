@@ -32,7 +32,7 @@ Remotes:
     krlmlr/duckdb/tools/rpkg@adbc-18
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3
 Collate: 
     'adbc-package.R'
     'Driver.R'
@@ -53,6 +53,7 @@ Collate:
     'dbDataType_Driver_list.R'
     'dbDisconnect_Connection.R'
     'dbExistsTable_Connection_character.R'
+    'dbFetchArrow_ResultArrow.R'
     'dbFetch_Result.R'
     'dbGetInfo_Connection.R'
     'dbGetInfo_Driver.R'
@@ -73,7 +74,6 @@ Collate:
     'dbSendQueryArrow_Connection.R'
     'dbSendQuery_Connection_character.R'
     'dbSendStatement_Connection_character.R'
-    'dbFetchArrow_ResultArrow.R'
     'dbWriteTable_Connection_character_data.frame.R'
     'dbplyr.R'
     'load_driver.R'

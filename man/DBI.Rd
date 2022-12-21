@@ -5,17 +5,17 @@
 %   R/dbColumnInfo_Result.R, R/dbCommit_Connection.R,
 %   R/dbConnect_Driver.R, R/dbDataType_Connection.R, R/dbDataType_Driver.R,
 %   R/dbDataType_Driver_list.R, R/dbDisconnect_Connection.R,
-%   R/dbExistsTable_Connection_character.R, R/dbFetch_Result.R,
-%   R/dbGetInfo_Connection.R, R/dbGetInfo_Driver.R, R/dbGetInfo_Result.R,
-%   R/dbGetRowCount_Result.R, R/dbGetRowsAffected_Result.R,
-%   R/dbGetStatement_Result.R, R/dbHasCompleted_Result.R,
-%   R/dbIsValid_Connection.R, R/dbIsValid_Driver.R,
+%   R/dbExistsTable_Connection_character.R, R/dbFetchArrow_ResultArrow.R,
+%   R/dbFetch_Result.R, R/dbGetInfo_Connection.R, R/dbGetInfo_Driver.R,
+%   R/dbGetInfo_Result.R, R/dbGetRowCount_Result.R,
+%   R/dbGetRowsAffected_Result.R, R/dbGetStatement_Result.R,
+%   R/dbHasCompleted_Result.R, R/dbIsValid_Connection.R, R/dbIsValid_Driver.R,
 %   R/dbIsValid_Result.R, R/dbListFields_Connection_character.R,
 %   R/dbListTables_Connection.R, R/dbQuoteIdentifier_Connection_character.R,
 %   R/dbQuoteString_Connection_character.R,
 %   R/dbRemoveTable_Connection_character.R, R/dbRollback_Connection.R,
 %   R/dbSendQueryArrow_Connection.R, R/dbSendQuery_Connection_character.R,
-%   R/dbSendStatement_Connection_character.R, R/dbFetchArrow_ResultArrow.R,
+%   R/dbSendStatement_Connection_character.R,
 %   R/dbWriteTable_Connection_character_data.frame.R, R/show_Connection.R,
 %   R/show_Driver.R, R/show_Result.R
 \docType{class}
@@ -49,6 +49,8 @@
 \alias{dbDisconnect,adbcConnection-method}
 \alias{dbExistsTable_adbcConnection_character}
 \alias{dbExistsTable,adbcConnection,character-method}
+\alias{dbFetchArrow_adbcResultArrow}
+\alias{dbFetchArrow,adbcResultArrow-method}
 \alias{dbFetch_adbcResult}
 \alias{dbFetch,adbcResult-method}
 \alias{dbGetInfo_adbcConnection}
@@ -89,8 +91,6 @@
 \alias{dbSendQuery,adbcConnection,character-method}
 \alias{dbSendStatement_adbcConnection_character}
 \alias{dbSendStatement,adbcConnection,character-method}
-\alias{dbFetchArrow_adbcResultArrow}
-\alias{dbFetchArrow,adbcResultArrow-method}
 \alias{dbWriteTable_adbcConnection_character_data.frame}
 \alias{dbWriteTable,adbcConnection,character,data.frame-method}
 \alias{show_adbcConnection}
@@ -124,6 +124,8 @@
 \S4method{dbDisconnect}{adbcConnection}(conn, ...)
 
 \S4method{dbExistsTable}{adbcConnection,character}(conn, name, ...)
+
+\S4method{dbFetchArrow}{adbcResultArrow}(res, ...)
 
 \S4method{dbFetch}{adbcResult}(res, n = -1, ...)
 
@@ -164,8 +166,6 @@
 \S4method{dbSendQuery}{adbcConnection,character}(conn, statement, ..., params = NULL)
 
 \S4method{dbSendStatement}{adbcConnection,character}(conn, statement, ..., params = NULL)
-
-\S4method{dbFetchArrow}{adbcResultArrow}(res, ...)
 
 \S4method{dbWriteTable}{adbcConnection,character,data.frame}(
   conn,
@@ -223,7 +223,8 @@ special values.}
 
 \item{statement}{a character string containing SQL.}
 
-\item{value}{a \link{data.frame} (or coercible to data.frame).}
+\item{value}{For \code{dbWriteTable()}, a \link{data.frame} (or coercible to data.frame).
+For \code{dbWriteTableArrow()}, an object coercible to an Arrow RecordBatchReader.}
 
 \item{overwrite}{Allow overwriting the destination table. Cannot be
 \code{TRUE} if \code{append} is also \code{TRUE}.}
