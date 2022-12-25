@@ -51,6 +51,8 @@ runs:
         install-r: ${{ inputs.install-r }}
         http-user-agent: ${{ matrix.config.http-user-agent }}
         use-public-rspm: true
+        extra-repositories:
+          - https://r-dbi.r-universe.dev
 
     - id: get-extra
       uses: ./.github/workflows/get-extra
