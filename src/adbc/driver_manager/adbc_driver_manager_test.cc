@@ -18,23 +18,21 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include <arrow/c/bridge.h>
-#include <arrow/record_batch.h>
-#include <arrow/table.h>
-#include <arrow/testing/matchers.h>
-
 #include <memory>
 #include <string>
 #include <vector>
 
 #include "adbc.h"
 #include "adbc_driver_manager.h"
-#include "driver/test_util.h"
 #include "validation/adbc_validation.h"
+#include "validation/adbc_validation_util.h"
 
 // Tests of the SQLite example driver, except using the driver manager
 
 namespace adbc {
+
+using adbc_validation::IsOkStatus;
+using adbc_validation::IsStatus;
 
 class DriverManager : public ::testing::Test {
  public:
@@ -42,8 +40,9 @@ class DriverManager : public ::testing::Test {
     std::memset(&driver, 0, sizeof(driver));
     std::memset(&error, 0, sizeof(error));
 
-    ADBC_ASSERT_OK_WITH_ERROR(error, AdbcLoadDriver("adbc_driver_sqlite", NULL,
-                                                    ADBC_VERSION_1_0_0, &driver, &error));
+    ASSERT_THAT(AdbcLoadDriver("adbc_driver_sqlite", nullptr, ADBC_VERSION_1_0_0, &driver,
+                               &error),
+                IsOkStatus(&error));
   }
 
   void TearDown() override {
@@ -52,39 +51,110 @@ class DriverManager : public ::testing::Test {
     }
 
     if (driver.release) {
-      ADBC_ASSERT_OK_WITH_ERROR(error, driver.release(&driver, &error));
+      ASSERT_THAT(driver.release(&driver, &error), IsOkStatus(&error));
       ASSERT_EQ(driver.private_data, nullptr);
       ASSERT_EQ(driver.private_manager, nullptr);
     }
   }
 
  protected:
-  AdbcDriver driver;
-  AdbcError error = {};
+  struct AdbcDriver driver = {};
+  struct AdbcError error = {};
 };
 
 TEST_F(DriverManager, DatabaseCustomInitFunc) {
-  AdbcDatabase database;
+  struct AdbcDatabase database;
   std::memset(&database, 0, sizeof(database));
 
   // Explicitly set entrypoint
-  ADBC_ASSERT_OK_WITH_ERROR(error, AdbcDatabaseNew(&database, &error));
-  ADBC_ASSERT_OK_WITH_ERROR(
-      error, AdbcDatabaseSetOption(&database, "driver", "adbc_driver_sqlite", &error));
-  ADBC_ASSERT_OK_WITH_ERROR(
-      error, AdbcDatabaseSetOption(&database, "entrypoint", "AdbcDriverInit", &error));
-  ADBC_ASSERT_OK_WITH_ERROR(error, AdbcDatabaseInit(&database, &error));
-  ADBC_ASSERT_OK_WITH_ERROR(error, AdbcDatabaseRelease(&database, &error));
+  ASSERT_THAT(AdbcDatabaseNew(&database, &error), IsOkStatus(&error));
+  ASSERT_THAT(AdbcDatabaseSetOption(&database, "driver", "adbc_driver_sqlite", &error),
+              IsOkStatus(&error));
+  ASSERT_THAT(AdbcDatabaseSetOption(&database, "entrypoint", "AdbcDriverInit", &error),
+              IsOkStatus(&error));
+  ASSERT_THAT(AdbcDatabaseInit(&database, &error), IsOkStatus(&error));
+  ASSERT_THAT(AdbcDatabaseRelease(&database, &error), IsOkStatus(&error));
 
   // Set invalid entrypoint
-  ADBC_ASSERT_OK_WITH_ERROR(error, AdbcDatabaseNew(&database, &error));
-  ADBC_ASSERT_OK_WITH_ERROR(
-      error, AdbcDatabaseSetOption(&database, "driver", "adbc_driver_sqlite", &error));
-  ADBC_ASSERT_OK_WITH_ERROR(
-      error,
-      AdbcDatabaseSetOption(&database, "entrypoint", "ThisSymbolDoesNotExist", &error));
+  ASSERT_THAT(AdbcDatabaseNew(&database, &error), IsOkStatus(&error));
+  ASSERT_THAT(AdbcDatabaseSetOption(&database, "driver", "adbc_driver_sqlite", &error),
+              IsOkStatus(&error));
+  ASSERT_THAT(
+      AdbcDatabaseSetOption(&database, "entrypoint", "ThisSymbolDoesNotExist", &error),
+      IsOkStatus(&error));
   ASSERT_EQ(ADBC_STATUS_INTERNAL, AdbcDatabaseInit(&database, &error));
-  ADBC_ASSERT_OK_WITH_ERROR(error, AdbcDatabaseRelease(&database, &error));
+  ASSERT_THAT(AdbcDatabaseRelease(&database, &error), IsOkStatus(&error));
+}
+
+TEST_F(DriverManager, ConnectionOptions) {
+  struct AdbcDatabase database;
+  struct AdbcConnection connection;
+  std::memset(&database, 0, sizeof(database));
+  std::memset(&connection, 0, sizeof(connection));
+
+  ASSERT_THAT(AdbcDatabaseNew(&database, &error), IsOkStatus(&error));
+  ASSERT_THAT(AdbcDatabaseSetOption(&database, "driver", "adbc_driver_sqlite", &error),
+              IsOkStatus(&error));
+  ASSERT_THAT(AdbcDatabaseInit(&database, &error), IsOkStatus(&error));
+
+  ASSERT_THAT(AdbcConnectionNew(&connection, &error), IsOkStatus(&error));
+  ASSERT_THAT(AdbcConnectionSetOption(&connection, "foo", "bar", &error),
+              IsOkStatus(&error));
+  ASSERT_EQ(ADBC_STATUS_NOT_IMPLEMENTED,
+            AdbcConnectionInit(&connection, &database, &error));
+  ASSERT_THAT(error.message, ::testing::HasSubstr("Unknown connection option foo=bar"));
+
+  ASSERT_THAT(AdbcConnectionRelease(&connection, &error), IsOkStatus(&error));
+  ASSERT_THAT(AdbcDatabaseRelease(&database, &error), IsOkStatus(&error));
+}
+
+TEST_F(DriverManager, MultiDriverTest) {
+  // Make sure two distinct drivers work in the same process (basic smoke test)
+  adbc_validation::Handle<struct AdbcError> error;
+  adbc_validation::Handle<struct AdbcDatabase> sqlite_db;
+  adbc_validation::Handle<struct AdbcDatabase> postgres_db;
+  adbc_validation::Handle<struct AdbcConnection> sqlite_conn;
+  adbc_validation::Handle<struct AdbcConnection> postgres_conn;
+
+  ASSERT_THAT(AdbcDatabaseNew(&sqlite_db.value, &error.value), IsOkStatus(&error.value));
+  ASSERT_THAT(AdbcDatabaseNew(&postgres_db.value, &error.value),
+              IsOkStatus(&error.value));
+
+  ASSERT_THAT(AdbcDatabaseSetOption(&sqlite_db.value, "driver", "adbc_driver_sqlite",
+                                    &error.value),
+              IsOkStatus(&error.value));
+  ASSERT_THAT(AdbcDatabaseSetOption(&postgres_db.value, "driver",
+                                    "adbc_driver_postgresql", &error.value),
+              IsOkStatus(&error.value));
+
+  ASSERT_THAT(AdbcDatabaseInit(&sqlite_db.value, &error.value), IsOkStatus(&error.value));
+  ASSERT_THAT(AdbcDatabaseInit(&postgres_db.value, &error.value),
+              IsStatus(ADBC_STATUS_INVALID_STATE, &error.value));
+  ASSERT_THAT(error->message,
+              ::testing::HasSubstr(
+                  "[libpq] Must set database option 'uri' before creating a connection"));
+  error->release(&error.value);
+
+  ASSERT_THAT(AdbcDatabaseSetOption(&postgres_db.value, "uri",
+                                    "postgresql://localhost:5432", &error.value),
+              IsOkStatus(&error.value));
+  ASSERT_THAT(AdbcDatabaseSetOption(&sqlite_db.value, "unknown", "foo", &error.value),
+              IsStatus(ADBC_STATUS_NOT_IMPLEMENTED, &error.value));
+  ASSERT_THAT(error->message,
+              ::testing::HasSubstr("[SQLite] Unknown database option unknown=foo"));
+  error->release(&error.value);
+
+  ASSERT_THAT(AdbcConnectionNew(&sqlite_conn.value, &error.value),
+              IsOkStatus(&error.value));
+  ASSERT_THAT(AdbcConnectionNew(&postgres_conn.value, &error.value),
+              IsOkStatus(&error.value));
+
+  ASSERT_THAT(AdbcConnectionInit(&sqlite_conn.value, &sqlite_db.value, &error.value),
+              IsOkStatus(&error.value));
+  ASSERT_THAT(AdbcConnectionInit(&postgres_conn.value, &postgres_db.value, &error.value),
+              IsStatus(ADBC_STATUS_IO, &error.value));
+  ASSERT_THAT(error->message, ::testing::HasSubstr("[libpq] Failed to connect"));
+  error->release(&error.value);
 }
 
 class SqliteQuirks : public adbc_validation::DriverQuirks {
@@ -97,7 +167,7 @@ class SqliteQuirks : public adbc_validation::DriverQuirks {
       return res;
     }
     return AdbcDatabaseSetOption(
-        database, "filename", "file:Sqlite_Transactions?mode=memory&cache=shared", error);
+        database, "uri", "file:Sqlite_Transactions?mode=memory&cache=shared", error);
   }
 
   std::string BindParameter(int index) const override { return "?"; }

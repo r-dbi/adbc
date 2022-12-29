@@ -43,7 +43,7 @@
 #include <stdint.h>
 
 /// \defgroup Arrow C Data Interface
-/// Definitions for the C Data Interface/C Arrow Interface.
+/// Definitions for the C Data Interface/C Stream Interface.
 ///
 /// See https://arrow.apache.org/docs/format/CDataInterface.html
 ///
@@ -103,14 +103,14 @@ struct ArrowArray {
 #ifndef ARROW_C_STREAM_INTERFACE
 #define ARROW_C_STREAM_INTERFACE
 
-struct ArrowArrayArrow {
+struct ArrowArrayStream {
   // Callback to get the stream type
   // (will be the same for all arrays in the stream).
   //
   // Return value: 0 if successful, an `errno`-compatible error code otherwise.
   //
   // If successful, the ArrowSchema must be released independently from the stream.
-  int (*get_schema)(struct ArrowArrayArrow*, struct ArrowSchema* out);
+  int (*get_schema)(struct ArrowArrayStream*, struct ArrowSchema* out);
 
   // Callback to get the next array
   // (if no error and the array is released, the stream has ended)
@@ -118,7 +118,7 @@ struct ArrowArrayArrow {
   // Return value: 0 if successful, an `errno`-compatible error code otherwise.
   //
   // If successful, the ArrowArray must be released independently from the stream.
-  int (*get_next)(struct ArrowArrayArrow*, struct ArrowArray* out);
+  int (*get_next)(struct ArrowArrayStream*, struct ArrowArray* out);
 
   // Callback to get optional detailed error information.
   // This must only be called if the last stream operation failed
@@ -129,11 +129,11 @@ struct ArrowArrayArrow {
   //
   // The returned pointer is only valid until the next operation on this stream
   // (including release).
-  const char* (*get_last_error)(struct ArrowArrayArrow*);
+  const char* (*get_last_error)(struct ArrowArrayStream*);
 
   // Release callback: release the stream's own resources.
   // Note that arrays returned by `get_next` must be individually released.
-  void (*release)(struct ArrowArrayArrow*);
+  void (*release)(struct ArrowArrayStream*);
 
   // Opaque producer-specific data
   void* private_data;
@@ -553,7 +553,7 @@ struct ADBC_EXPORT AdbcStatement {
 /// To use partitioning, execute the statement with
 /// AdbcStatementExecutePartitions to get the partition descriptors.
 /// Call AdbcConnectionReadPartition to turn the individual
-/// descriptors into ArrowArrayArrow instances.  This may be done on
+/// descriptors into ArrowArrayStream instances.  This may be done on
 /// a different connection than the one the partition was created
 /// with, or even in a different process on another machine.
 ///
@@ -625,32 +625,32 @@ struct ADBC_EXPORT AdbcDriver {
 
   AdbcStatusCode (*ConnectionCommit)(struct AdbcConnection*, struct AdbcError*);
   AdbcStatusCode (*ConnectionGetInfo)(struct AdbcConnection*, uint32_t*, size_t,
-                                      struct ArrowArrayArrow*, struct AdbcError*);
+                                      struct ArrowArrayStream*, struct AdbcError*);
   AdbcStatusCode (*ConnectionGetObjects)(struct AdbcConnection*, int, const char*,
                                          const char*, const char*, const char**,
-                                         const char*, struct ArrowArrayArrow*,
+                                         const char*, struct ArrowArrayStream*,
                                          struct AdbcError*);
   AdbcStatusCode (*ConnectionGetTableSchema)(struct AdbcConnection*, const char*,
                                              const char*, const char*,
                                              struct ArrowSchema*, struct AdbcError*);
   AdbcStatusCode (*ConnectionGetTableTypes)(struct AdbcConnection*,
-                                            struct ArrowArrayArrow*, struct AdbcError*);
+                                            struct ArrowArrayStream*, struct AdbcError*);
   AdbcStatusCode (*ConnectionInit)(struct AdbcConnection*, struct AdbcDatabase*,
                                    struct AdbcError*);
   AdbcStatusCode (*ConnectionNew)(struct AdbcConnection*, struct AdbcError*);
   AdbcStatusCode (*ConnectionSetOption)(struct AdbcConnection*, const char*, const char*,
                                         struct AdbcError*);
   AdbcStatusCode (*ConnectionReadPartition)(struct AdbcConnection*, const uint8_t*,
-                                            size_t, struct ArrowArrayArrow*,
+                                            size_t, struct ArrowArrayStream*,
                                             struct AdbcError*);
   AdbcStatusCode (*ConnectionRelease)(struct AdbcConnection*, struct AdbcError*);
   AdbcStatusCode (*ConnectionRollback)(struct AdbcConnection*, struct AdbcError*);
 
   AdbcStatusCode (*StatementBind)(struct AdbcStatement*, struct ArrowArray*,
                                   struct ArrowSchema*, struct AdbcError*);
-  AdbcStatusCode (*StatementBindArrow)(struct AdbcStatement*, struct ArrowArrayArrow*,
+  AdbcStatusCode (*StatementBindStream)(struct AdbcStatement*, struct ArrowArrayStream*,
                                         struct AdbcError*);
-  AdbcStatusCode (*StatementExecuteQuery)(struct AdbcStatement*, struct ArrowArrayArrow*,
+  AdbcStatusCode (*StatementExecuteQuery)(struct AdbcStatement*, struct ArrowArrayStream*,
                                           int64_t*, struct AdbcError*);
   AdbcStatusCode (*StatementExecutePartitions)(struct AdbcStatement*, struct ArrowSchema*,
                                                struct AdbcPartitions*, int64_t*,
@@ -743,7 +743,7 @@ AdbcStatusCode AdbcConnectionRelease(struct AdbcConnection* connection,
 /// \defgroup adbc-connection-metadata Metadata
 /// Functions for retrieving metadata about the database.
 ///
-/// Generally, these functions return an ArrowArrayArrow that can be
+/// Generally, these functions return an ArrowArrayStream that can be
 /// consumed to get the metadata as Arrow data.  The returned metadata
 /// has an expected schema given in the function docstring. Schema
 /// fields are nullable unless otherwise marked.  While no
@@ -797,7 +797,7 @@ AdbcStatusCode AdbcConnectionRelease(struct AdbcConnection* connection,
 ADBC_EXPORT
 AdbcStatusCode AdbcConnectionGetInfo(struct AdbcConnection* connection,
                                      uint32_t* info_codes, size_t info_codes_length,
-                                     struct ArrowArrayArrow* out,
+                                     struct ArrowArrayStream* out,
                                      struct AdbcError* error);
 
 /// \brief Get a hierarchical view of all catalogs, database schemas,
@@ -907,7 +907,7 @@ AdbcStatusCode AdbcConnectionGetObjects(struct AdbcConnection* connection, int d
                                         const char* catalog, const char* db_schema,
                                         const char* table_name, const char** table_type,
                                         const char* column_name,
-                                        struct ArrowArrayArrow* out,
+                                        struct ArrowArrayStream* out,
                                         struct AdbcError* error);
 
 /// \brief Get the Arrow schema of a table.
@@ -938,7 +938,7 @@ AdbcStatusCode AdbcConnectionGetTableSchema(struct AdbcConnection* connection,
 /// \param[out] error Error details, if an error occurs.
 ADBC_EXPORT
 AdbcStatusCode AdbcConnectionGetTableTypes(struct AdbcConnection* connection,
-                                           struct ArrowArrayArrow* out,
+                                           struct ArrowArrayStream* out,
                                            struct AdbcError* error);
 
 /// @}
@@ -971,7 +971,7 @@ ADBC_EXPORT
 AdbcStatusCode AdbcConnectionReadPartition(struct AdbcConnection* connection,
                                            const uint8_t* serialized_partition,
                                            size_t serialized_length,
-                                           struct ArrowArrayArrow* out,
+                                           struct ArrowArrayStream* out,
                                            struct AdbcError* error);
 
 /// @}
@@ -1038,7 +1038,7 @@ AdbcStatusCode AdbcStatementRelease(struct AdbcStatement* statement,
 ///   message if necessary.
 ADBC_EXPORT
 AdbcStatusCode AdbcStatementExecuteQuery(struct AdbcStatement* statement,
-                                         struct ArrowArrayArrow* out,
+                                         struct ArrowArrayStream* out,
                                          int64_t* rows_affected, struct AdbcError* error);
 
 /// \brief Turn this statement into a prepared statement to be
@@ -1119,8 +1119,8 @@ AdbcStatusCode AdbcStatementBind(struct AdbcStatement* statement,
 /// \param[out] error An optional location to return an error message
 ///   if necessary.
 ADBC_EXPORT
-AdbcStatusCode AdbcStatementBindArrow(struct AdbcStatement* statement,
-                                       struct ArrowArrayArrow* stream,
+AdbcStatusCode AdbcStatementBindStream(struct AdbcStatement* statement,
+                                       struct ArrowArrayStream* stream,
                                        struct AdbcError* error);
 
 /// \brief Get the schema for bound parameters.

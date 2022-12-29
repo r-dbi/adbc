@@ -114,11 +114,12 @@ static AdbcStatusCode ReleaseDriver(struct AdbcDriver* driver, struct AdbcError*
   }
 
 #if defined(_WIN32)
-  if (!FreeLibrary(state->handle)) {
-    std::string message = "FreeLibrary() failed: ";
-    GetWinError(&message);
-    SetError(error, message);
-  }
+  // TODO(apache/arrow-adbc#204): causes tests to segfault
+  // if (!FreeLibrary(state->handle)) {
+  //   std::string message = "FreeLibrary() failed: ";
+  //   GetWinError(&message);
+  //   SetError(error, message);
+  // }
 #endif  // defined(_WIN32)
 
   driver->private_manager = nullptr;
@@ -138,14 +139,14 @@ AdbcStatusCode ConnectionCommit(struct AdbcConnection*, struct AdbcError* error)
 }
 
 AdbcStatusCode ConnectionGetInfo(struct AdbcConnection* connection, uint32_t* info_codes,
-                                 size_t info_codes_length, struct ArrowArrayArrow* out,
+                                 size_t info_codes_length, struct ArrowArrayStream* out,
                                  struct AdbcError* error) {
   return ADBC_STATUS_NOT_IMPLEMENTED;
 }
 
 AdbcStatusCode ConnectionGetObjects(struct AdbcConnection*, int, const char*, const char*,
                                     const char*, const char**, const char*,
-                                    struct ArrowArrayArrow*, struct AdbcError* error) {
+                                    struct ArrowArrayStream*, struct AdbcError* error) {
   return ADBC_STATUS_NOT_IMPLEMENTED;
 }
 
@@ -155,7 +156,7 @@ AdbcStatusCode ConnectionGetTableSchema(struct AdbcConnection*, const char*, con
   return ADBC_STATUS_NOT_IMPLEMENTED;
 }
 
-AdbcStatusCode ConnectionGetTableTypes(struct AdbcConnection*, struct ArrowArrayArrow*,
+AdbcStatusCode ConnectionGetTableTypes(struct AdbcConnection*, struct ArrowArrayStream*,
                                        struct AdbcError* error) {
   return ADBC_STATUS_NOT_IMPLEMENTED;
 }
@@ -163,7 +164,7 @@ AdbcStatusCode ConnectionGetTableTypes(struct AdbcConnection*, struct ArrowArray
 AdbcStatusCode ConnectionReadPartition(struct AdbcConnection* connection,
                                        const uint8_t* serialized_partition,
                                        size_t serialized_length,
-                                       struct ArrowArrayArrow* out,
+                                       struct ArrowArrayStream* out,
                                        struct AdbcError* error) {
   return ADBC_STATUS_NOT_IMPLEMENTED;
 }
@@ -316,11 +317,17 @@ AdbcStatusCode AdbcDatabaseInit(struct AdbcDatabase* database, struct AdbcError*
     status = database->private_driver->DatabaseSetOption(database, option.first.c_str(),
                                                          option.second.c_str(), error);
     if (status != ADBC_STATUS_OK) {
+      delete args;
+      // Release the database
+      std::ignore = database->private_driver->DatabaseRelease(database, error);
       if (database->private_driver->release) {
         database->private_driver->release(database->private_driver, error);
       }
       delete database->private_driver;
       database->private_driver = nullptr;
+      // Should be redundant, but ensure that AdbcDatabaseRelease
+      // below doesn't think that it contains a TempDatabase
+      database->private_data = nullptr;
       return status;
     }
   }
@@ -359,7 +366,7 @@ AdbcStatusCode AdbcConnectionCommit(struct AdbcConnection* connection,
 
 AdbcStatusCode AdbcConnectionGetInfo(struct AdbcConnection* connection,
                                      uint32_t* info_codes, size_t info_codes_length,
-                                     struct ArrowArrayArrow* out,
+                                     struct ArrowArrayStream* out,
                                      struct AdbcError* error) {
   if (!connection->private_driver) {
     return ADBC_STATUS_INVALID_STATE;
@@ -372,7 +379,7 @@ AdbcStatusCode AdbcConnectionGetObjects(struct AdbcConnection* connection, int d
                                         const char* catalog, const char* db_schema,
                                         const char* table_name, const char** table_types,
                                         const char* column_name,
-                                        struct ArrowArrayArrow* stream,
+                                        struct ArrowArrayStream* stream,
                                         struct AdbcError* error) {
   if (!connection->private_driver) {
     return ADBC_STATUS_INVALID_STATE;
@@ -395,7 +402,7 @@ AdbcStatusCode AdbcConnectionGetTableSchema(struct AdbcConnection* connection,
 }
 
 AdbcStatusCode AdbcConnectionGetTableTypes(struct AdbcConnection* connection,
-                                           struct ArrowArrayArrow* stream,
+                                           struct ArrowArrayStream* stream,
                                            struct AdbcError* error) {
   if (!connection->private_driver) {
     return ADBC_STATUS_INVALID_STATE;
@@ -409,8 +416,12 @@ AdbcStatusCode AdbcConnectionInit(struct AdbcConnection* connection,
   if (!connection->private_data) {
     SetError(error, "Must call AdbcConnectionNew first");
     return ADBC_STATUS_INVALID_STATE;
+  } else if (!database->private_driver) {
+    SetError(error, "Database is not initialized");
+    return ADBC_STATUS_INVALID_ARGUMENT;
   }
   TempConnection* args = reinterpret_cast<TempConnection*>(connection->private_data);
+  connection->private_data = nullptr;
   std::unordered_map<std::string, std::string> options = std::move(args->options);
   delete args;
 
@@ -428,7 +439,9 @@ AdbcStatusCode AdbcConnectionInit(struct AdbcConnection* connection,
 
 AdbcStatusCode AdbcConnectionNew(struct AdbcConnection* connection,
                                  struct AdbcError* error) {
-  // Allocate a temporary structure to store options pre-Init
+  // Allocate a temporary structure to store options pre-Init, because
+  // we don't get access to the database (and hence the driver
+  // function table) until then
   connection->private_data = new TempConnection;
   connection->private_driver = nullptr;
   return ADBC_STATUS_OK;
@@ -437,7 +450,7 @@ AdbcStatusCode AdbcConnectionNew(struct AdbcConnection* connection,
 AdbcStatusCode AdbcConnectionReadPartition(struct AdbcConnection* connection,
                                            const uint8_t* serialized_partition,
                                            size_t serialized_length,
-                                           struct ArrowArrayArrow* out,
+                                           struct ArrowArrayStream* out,
                                            struct AdbcError* error) {
   if (!connection->private_driver) {
     return ADBC_STATUS_INVALID_STATE;
@@ -472,8 +485,15 @@ AdbcStatusCode AdbcConnectionRollback(struct AdbcConnection* connection,
 
 AdbcStatusCode AdbcConnectionSetOption(struct AdbcConnection* connection, const char* key,
                                        const char* value, struct AdbcError* error) {
-  if (!connection->private_driver) {
+  if (!connection->private_data) {
+    SetError(error, "AdbcConnectionSetOption: must AdbcConnectionNew first");
     return ADBC_STATUS_INVALID_STATE;
+  }
+  if (!connection->private_driver) {
+    // Init not yet called, save the option
+    TempConnection* args = reinterpret_cast<TempConnection*>(connection->private_data);
+    args->options[key] = value;
+    return ADBC_STATUS_OK;
   }
   return connection->private_driver->ConnectionSetOption(connection, key, value, error);
 }
@@ -487,13 +507,13 @@ AdbcStatusCode AdbcStatementBind(struct AdbcStatement* statement,
   return statement->private_driver->StatementBind(statement, values, schema, error);
 }
 
-AdbcStatusCode AdbcStatementBindArrow(struct AdbcStatement* statement,
-                                       struct ArrowArrayArrow* stream,
+AdbcStatusCode AdbcStatementBindStream(struct AdbcStatement* statement,
+                                       struct ArrowArrayStream* stream,
                                        struct AdbcError* error) {
   if (!statement->private_driver) {
     return ADBC_STATUS_INVALID_STATE;
   }
-  return statement->private_driver->StatementBindArrow(statement, stream, error);
+  return statement->private_driver->StatementBindStream(statement, stream, error);
 }
 
 // XXX: cpplint gets confused here if declared as 'struct ArrowSchema* schema'
@@ -510,7 +530,7 @@ AdbcStatusCode AdbcStatementExecutePartitions(struct AdbcStatement* statement,
 }
 
 AdbcStatusCode AdbcStatementExecuteQuery(struct AdbcStatement* statement,
-                                         struct ArrowArrayArrow* out,
+                                         struct ArrowArrayStream* out,
                                          int64_t* rows_affected,
                                          struct AdbcError* error) {
   if (!statement->private_driver) {
@@ -658,7 +678,9 @@ AdbcStatusCode AdbcLoadDriver(const char* driver_name, const char* entrypoint,
   void* load_handle = GetProcAddress(handle, entrypoint);
   init_func = reinterpret_cast<AdbcDriverInitFunc>(load_handle);
   if (!init_func) {
-    std::string message = "GetProcAddress() failed: ";
+    std::string message = "GetProcAddress(";
+    message += entrypoint;
+    message += ") failed: ";
     GetWinError(&message);
     if (!FreeLibrary(handle)) {
       message += "\nFreeLibrary() failed: ";
@@ -714,13 +736,15 @@ AdbcStatusCode AdbcLoadDriver(const char* driver_name, const char* entrypoint,
   }
 
   void* load_handle = dlsym(handle, entrypoint);
-  init_func = reinterpret_cast<AdbcDriverInitFunc>(load_handle);
-  if (!init_func) {
-    std::string message = "dlsym() failed: ";
+  if (!load_handle) {
+    std::string message = "dlsym(";
+    message += entrypoint;
+    message += ") failed: ";
     message += dlerror();
     SetError(error, message);
     return ADBC_STATUS_INTERNAL;
   }
+  init_func = reinterpret_cast<AdbcDriverInitFunc>(load_handle);
 
 #endif  // defined(_WIN32)
 

@@ -33,7 +33,7 @@ SEXP cpp_send_query(const int connection_id, std::string sql) {
 
   AdbcStatusCode adbc_status;
   AdbcError adbc_error;
-  ArrowArrayArrow arrow_fetch_arrow;
+  ArrowArrayStream arrow_fetch_arrow;
 
   adbc_status = driver.StatementNew(&adbc_connections[connection_id], &adbc_statements[connection_id], &adbc_error);
   REQUIRE(adbc_status == ADBC_STATUS_OK);
