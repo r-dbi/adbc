@@ -18,7 +18,10 @@ devtools::install_github("r-dbi/adbc")
 
 ## Example
 
-Requires duckdb from <https://github.com/krlmlr/duckdb/tree/adbc>.
+Requires duckadbc from <https://github.com/r-dbi/duckadbc>:
+
+- Clone the repository
+- Install the R package with `R CMD INSTALL tools/rpkg`
 
 ```r
 load_driver("Driver=~/git/R/duckdb/tools/rpkg/src/duckdb.so;Entrypoint=duckdb_adbc_driver_init")
