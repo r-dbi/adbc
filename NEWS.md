@@ -1,5 +1,10 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# adbc 0.0.0.9007 (2022-12-30)
+
+- Internal changes only.
+
+
 # adbc 0.0.0.9006 (2022-12-30)
 
 ## Chore
