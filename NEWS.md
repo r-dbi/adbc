@@ -1,4 +1,9 @@
-<!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
+<!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
+
+# adbc 0.0.0.9008 (2023-02-17)
+
+- Internal changes only.
+
 
 # adbc 0.0.0.9007 (2022-12-30)
 
