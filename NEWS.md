@@ -1,5 +1,10 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# adbc 0.0.0.9009 (2023-03-24)
+
+- Internal changes only.
+
+
 # adbc 0.0.0.9008 (2023-02-17)
 
 - Internal changes only.
