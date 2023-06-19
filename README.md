@@ -1,6 +1,8 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
+⚠️ ⚠️ ⚠️  This package is archived, new development continues in [r-dbi/adbi](https://github.com/r-dbi/adbi). ⚠️ ⚠️ ⚠️ 
+
 # adbc
 
 <!-- badges: start -->
